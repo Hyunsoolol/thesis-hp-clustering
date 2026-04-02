@@ -1,5 +1,6 @@
 
 **국문 제목** 고차원 데이터에서 이질성 유발 변수를 탐색하는 희소 혼합평균효과 기반 클러스터링 방법론
+
 **영문 제목** High-Dimensional Clustering via Sparse Mixture Mean-Effects for Heterogeneity Pursuit
 
 ---
