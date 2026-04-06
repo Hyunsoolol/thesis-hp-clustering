@@ -207,7 +207,7 @@ $$X_i = \mu_0 + \Lambda f_i + \delta_{Z_i} + \varepsilon_i, \quad \varepsilon_i 
 ### 1. 시뮬레이션: 신호 강도 변화에 따른 phase transition 검증
 
 #### 2.1 실험 목적
-2차 시뮬레이션의 목적은 노이즈 좌표의 분산이 커진 환경에서 신호 강도 **a**를 점진적으로 약화시켰을 때, 제안 모형과 비교 모형의 성능이 어떻게 변하는지를 확인하는 것이다. 특히 이 실험은 다음 세 가지를 검토한다.
+시뮬레이션의 목적은 노이즈 좌표의 분산이 커진 환경에서 신호 강도 **a**를 점진적으로 약화시켰을 때, 제안 모형과 비교 모형의 성능이 어떻게 변하는지를 확인하는 것이다. 특히 이 실험은 다음 세 가지를 검토한다.
 * **첫째,** 제안 모형이 mean-heterogeneity variable selection을 얼마나 안정적으로 수행하는가.
 * **둘째,** 과거 prototype인 Naive Lasso와 대표적 비지도 벤치마크인 Sparse K-means가 어떤 한계를 보이는가.
 * **셋째,** HP+refit 파이프라인이 어느 신호 구간까지 near-oracle behavior를 유지하는가.
@@ -273,7 +273,7 @@ $$X_i = \mu_0 + \Lambda f_i + \delta_{Z_i} + \varepsilon_i, \quad \varepsilon_i 
 **넷째,** 약신호 구간에서는 selection 정확도와 clustering recovery가 분리될 수 있다. **a=1.3**에서 HP는 **TPR=1.000**, **FPR=0.067**, **$\hat{S}=6$**으로 비교적 양호한 선택 성능을 보였으나, HP+refit의 ARI는 0.336에 머물렀고 oracle GMM 0.694와 큰 차이를 보였다. 이는 약한 신호 영역에서 한두 개의 false positive만으로도 refit likelihood landscape가 크게 흔들릴 수 있고, 초기값 민감도나 local optimum 문제가 실제 군집 성능에 직접 영향을 미칠 수 있음을 시사한다. 따라서 이 구간은 "제안 방법이 실패했다"기보다, 약신호·중첩 군집 환경에서 현재 refit 단계의 수치적 불안정성이 남아 있다고 해석하는 것이 타당하다. 향후에는 start 수 확대, thresholded refit, stability-based selection, adaptive weighting 개선 등을 통해 이 구간을 보완할 필요가 있다.
 
 #### 2.5 종합 정리
-2차 시뮬레이션을 종합하면, 제안 방법은 공통 공분산 구조 하에서의 mean heterogeneity selection 문제에 대해 다음과 같은 경험적 패턴을 보였다.
+시뮬레이션을 종합하면, 제안 방법은 공통 공분산 구조 하에서의 mean heterogeneity selection 문제에 대해 다음과 같은 경험적 패턴을 보였다.
 * **첫째,** 중간 이상의 신호 구간에서는 진짜 mean-heterogeneity coordinates를 매우 정확히 복원한다.
 * **둘째,** 선택 단계의 shrinkage bias는 refit 단계에서 상당 부분 제거될 수 있다.
 * **셋째,** 현재 설정에서는 HP+refit이 **a=1.8**과 **a=1.5**에서 oracle benchmark와 동일한 ARI를 보였으나, 이는 empirical near-oracle behavior로 이해해야 하며 asymptotic guarantee를 의미하지는 않는다.
