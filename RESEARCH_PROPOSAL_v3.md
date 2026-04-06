@@ -10,7 +10,7 @@
 
 본 연구는 이러한 선행 연구의 문제의식을 비지도학습으로 확장한다. 즉, 반응변수 $Y_i$가 존재하지 않는 상황에서 군집 중심을 latent mean으로 보고, 이 latent mean을 공통 평균과 군집특이 편차로 분해하여 "어떤 변수들이 실제 군집 이질성의 원천인가"를 직접 추적하는 클러스터링 방법론을 개발하고자 한다. 해당 문헌에서 future direction으로 high-dimensional setting, cluster learning, multivariate setting의 확장을 명시적으로 제시한 점을 고려하면, 본 연구는 그 방향을 직접 이어받는 형태라고 볼 수 있다.
 
-#### 2. 연구목표
+### 2. 연구목표
 
 본 연구의 1차 목표는 다음 세 가지이다.
 
@@ -20,7 +20,7 @@
 
 셋째, $p \gg n$ 환경에서 변수선택 일관성, 군집 오분류율, 평균 구조 추정오차 등에 대한 이론적 보장을 제시한다.
 
-#### 3. 핵심 연구질문
+### 3. 핵심 연구질문
 
 본 연구는 다음 질문에 답하는 것을 목표로 한다.
 
@@ -32,9 +32,9 @@ Q3. 고차원 환경에서 이 방법의 선택 일관성과 clustering consiste
 
 Q4. 분산 구조가 달라질 때 heterogeneity 정의를 어떻게 조정할 것인가?
 
-#### 4. 제안모형
+### 4. 제안모형
 
-##### 4.1 기본 모형
+#### 4.1 기본 모형
 
 관측치 $X_i = (X_{i1}, \dots, X_{ip})^\top \in \mathbb{R}^p$, 잠재 군집 $Z_i \in {1, \dots, K}$에 대하여 다음 baseline model을 제안한다.
 
@@ -48,7 +48,7 @@ $$\mu_j = \mu_0 + \delta_j, \quad \sum_{j=1}^K \delta_{jk} = 0, \quad k = 1, \do
 
 이때 선행 연구에서 다루었던 공통효과/군집특이효과 분해 $\beta_{0k}, \beta_{jk}$ 를 비지도 setting에 맞게 $\mu_{0k}, \delta_{jk}$ 로 옮겨온 것으로 볼 수 있다. 즉, 해당 연구의 핵심 parameterization을 "회귀계수"가 아니라 "군집 평균"에 적용하는 것이다.
 
-##### 4.2 이질적 변수의 정의
+#### 4.2 이질적 변수의 정의
 
 변수 $k$에 대하여 $\delta_{\cdot k} = (\delta_{1k}, \dots, \delta_{Kk})^\top$ 라 두면, 군집 이질성을 유발하는 변수 집합을 $S_H = \{k : \|\delta_{\cdot k}\|_2 \neq 0\}$ 로 정의한다.
 
@@ -56,7 +56,7 @@ $$\mu_j = \mu_0 + \delta_j, \quad \sum_{j=1}^K \delta_{jk} = 0, \quad k = 1, \do
 
 이 정의는 기존 연구에서 "relevant predictor 중에서 cluster-specific effect가 존재하는 predictor를 true source of heterogeneity로 본다" 는 논리를 비지도 setting으로 직접 옮긴 것이다. 또한 해당 문헌은 이런 구분이 전체 모형을 훨씬 더 parsimonious하게 만들 수 있음을 강조한다.
 
-##### 4.3 공분산 구조: 왜 diagonal covariance부터 시작하는가
+#### 4.3 공분산 구조: 왜 diagonal covariance부터 시작하는가
 
 본 연구의 초기 모델 설정 및 1차 시뮬레이션에서는 $\Sigma_j = \Sigma = \text{diag}(\sigma_1^2, \dots, \sigma_p^2)$ 또는 가장 단순하게 $\Sigma = I_p$ 로 두는 것이 타당하다.
 
@@ -64,9 +64,9 @@ $$\mu_j = \mu_0 + \delta_j, \quad \sum_{j=1}^K \delta_{jk} = 0, \quad k = 1, \do
 
 이러한 선택은 선행 연구의 scale-adjusted heterogeneity 논리와도 잘 맞는다. 해당 연구는 component variance가 heterogeneity의 해석과 정의에 직접 영향을 주며, component variances가 같을 때 raw effect와 scaled effect가 일치한다고 설명한다. 또한 multivariate extension에서는 covariance matrix의 차이가 source of heterogeneity의 정의 자체를 복잡하게 만든다고 명시한다. 따라서 본 연구의 1차 단계에서는 공통 diagonal covariance를 택해 문제를 정리하고, 이후 확장으로 correlated feature 혹은 unequal diagonal variance를 다루는 것이 전략적으로 적절하다.
 
-#### 5. 추정방법
+### 5. 추정방법
 
-##### 5.1 정규화된 목적함수
+#### 5.1 정규화된 목적함수
 
 모수 $\Theta = (\pi_1, \dots, \pi_K, \mu_0, \delta_1, \dots, \delta_K, \Sigma)$ 에 대해 다음 penalized log-likelihood를 고려한다.
 
@@ -78,7 +78,7 @@ $$w_k = (\|\tilde{\delta}_{\cdot k}\|_2 + \varepsilon)^{-\gamma}$$
 
 이 penalty는 변수 단위의 group sparsity를 유도하므로, 한 변수 $k$가 전체적으로 군집 이질성의 원천인지 아닌지를 직접 판정하게 해준다.
 
-##### 5.2 식별성 제약
+#### 5.2 식별성 제약
 
 $\mu_j = \mu_0 + \delta_j$ 만으로는 $\mu_0$와 $\delta_j$의 분해가 유일하지 않다. 따라서
 
@@ -86,7 +86,7 @@ $$\sum_{j=1}^K \delta_{jk} = 0, \quad k = 1, \dots, p$$
 
 와 같은 sum-to-zero 제약이 필요하다. 이 제약은 모티브가 된 선행 연구에서 사용한 effects-model parameterization과 같은 역할을 하며, parameter identifiability를 위한 핵심 장치이다.
 
-##### 5.3 계산 알고리즘
+#### 5.3 계산 알고리즘
 
 계산은 EM 알고리즘을 기본 골격으로 한다. 기존 문헌 역시 penalized mixture effects regression을 EM과 constrained penalized least squares 구조로 풀고 있으며, M-step에서는 linearly constrained $\ell_1$-penalized regression을 Bregman coordinate descent로 해결한다. 본 연구 역시 이 구조를 비지도 mixture mean model에 맞게 변형할 수 있다.
 
@@ -106,7 +106,7 @@ $$\sum_{j=1}^K \delta_{jk} = 0$$
 
 튜닝 파라미터 $\lambda$와 군집 수 $K$는 BIC, ICL, 혹은 clustering stability 기준을 사용해 선택할 수 있다. 선행 연구에서도 component 수와 penalty parameter 선택에 BIC를 사용하였다.
 
-#### 6. 이론적 연구목표
+### 6. 이론적 연구목표
 
 기존 연구는 fixed $p, m$ 설정에서 adaptive estimator의 $\sqrt{n}$-consistency와 selection consistency를 제시한다. 본 연구의 박사논문 기여는 이 결과를 비지도 high-dimensional setting으로 확장하는 데 있다.
 
@@ -130,7 +130,7 @@ $$\pi_j^* \ge \pi_{\min} > 0, \quad 0 < c_\sigma \le \sigma_k^2 \le C_\sigma < \
 
 $$\min_{j \neq \ell} \sum_{k \in S_H} \frac{(\delta_{jk}^* - \delta_{\ell k}^*)^2}{\sigma_k^2} \ge c_0, \quad s \log p = o(n)$$
 
-#### 7. 기존 연구와의 차별성
+### 7. 기존 연구와의 차별성
 
 본 연구의 차별점은 단순히 "클러스터링에 유용한 변수"를 고르는 것이 아니라, 군집 중심의 좌표별 분해를 통해 "왜 군집이 갈리는가"를 직접 묻는다는 점에 있다.
 
