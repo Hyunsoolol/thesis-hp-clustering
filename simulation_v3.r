@@ -47,17 +47,23 @@ for (scenario_idx in seq_along(signal_grid)) {
   n <- 200
   p <- 300
   K <- 3
-  q <- 10
+  q <- 5
   a <- signal_grid[scenario_idx]
 
   pi_true <- rep(1 / K, K)
   Z_true <- sample(1:K, n, replace = TRUE, prob = pi_true)
-
+  
+  # pattern 1
   true_delta <- matrix(0, nrow = K, ncol = p)
   true_delta[1, 1:q] <- a
   true_delta[2, 1:q] <- 0
   true_delta[3, 1:q] <- -a
-
+  
+  # pattern 2
+  # true_delta[, 1] <- c( a,   -a/2, -a/2)
+  # true_delta[, 2] <- c(-a/2,  a,   -a/2)
+  # true_delta[, 3] <- c(-a/2, -a/2,  a)
+  
   X <- matrix(rnorm(n * p), nrow = n, ncol = p)
   for (i in 1:n) {
     X[i, ] <- X[i, ] + true_delta[Z_true[i], ]
