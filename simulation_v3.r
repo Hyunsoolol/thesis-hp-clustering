@@ -45,9 +45,9 @@ for (scenario_idx in seq_along(signal_grid)) {
   # Step 1. 시뮬레이션 세팅
   # ==============================================================================
   n <- 200
-  p <- 300
-  K <- 3
-  q <- 5
+  p <- 300 # p 10 or 300
+  K <- 3 
+  q <- 5 # 3 or 5
   a <- signal_grid[scenario_idx]
 
   pi_true <- rep(1 / K, K)
