@@ -426,8 +426,8 @@ for (scenario_idx in seq_along(signal_grid)) {
     row_max <- apply(log_mat, 1, max)
     loglik_hp_pilot <- sum(row_max + log(rowSums(exp(sweep(log_mat, 1, row_max, "-")))))
 
-    nnz_per_var_hp_pilot <- colSums(abs(delta_hp) > 1e-4)
-    df_hp_pilot <- (K - 1) + p + p + sum(pmax(nnz_per_var_hp_pilot - 1, 0))
+    active_vars_hp_pilot <- apply(delta_hp, 2, function(x) sqrt(sum(x^2))) > 1e-4
+    df_hp_pilot <- (K - 1) + p + p + sum(active_vars_hp_pilot) * (K - 1)
     bic_hp_pilot <- -2 * loglik_hp_pilot + log(n) * df_hp_pilot
 
     if (bic_hp_pilot < best_bic_hp_pilot) {
@@ -562,8 +562,8 @@ for (scenario_idx in seq_along(signal_grid)) {
     row_max <- apply(log_mat, 1, max)
     loglik_hp <- sum(row_max + log(rowSums(exp(sweep(log_mat, 1, row_max, "-")))))
 
-    nnz_per_var_hp <- colSums(abs(delta_hp) > 1e-4)
-    df_hp <- (K - 1) + p + p + sum(pmax(nnz_per_var_hp - 1, 0))
+    active_vars_hp <- apply(delta_hp, 2, function(x) sqrt(sum(x^2))) > 1e-4
+    df_hp <- (K - 1) + p + p + sum(active_vars_hp) * (K - 1)
     bic_hp <- -2 * loglik_hp + log(n) * df_hp
 
     if (bic_hp < best_bic_hp) {
