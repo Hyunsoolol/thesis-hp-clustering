@@ -8,7 +8,8 @@
 
 ### 1. 모델 구조 및 알고리즘의 핵심 개선
 
-- **변수 단위 선택의 명확성 확보 (Group Lasso 도입):** - _과거:_ 개별 파라미터($|\delta_{kj}|$)에 $\ell_1$ 페널티 적용 $\rightarrow$ 하나의 변수 내에서도 특정 군집만 0이 되는 파편화(Fragmentation) 발생.
+- **변수 단위 선택의 명확성 확보 (Group Lasso 도입):**
+    - _과거:_ 개별 파라미터($|\delta_{kj}|$)에 $\ell_1$ 페널티 적용 $\rightarrow$ 하나의 변수 내에서도 특정 군집만 0이 되는 파편화(Fragmentation) 발생.
     - _현재:_ 변수 단위의 군집 편차 벡터 전체($\|\delta_{\cdot k}\|_2$)에 **Group Lasso($\ell_2$) 페널티 적용** $\rightarrow$ 특정 변수를 통째로 살리거나 0으로 만들어 '이질성 유발 변수 집합($S_H$)'을 완벽하게 식별.
         
 - **식별성 제약(Identifiability Constraint)의 안정화:**
