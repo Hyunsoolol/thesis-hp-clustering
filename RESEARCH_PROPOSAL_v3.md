@@ -2,41 +2,42 @@
 
 ### High-Dimensional Clustering via Sparse Mixture Mean-Effects for Heterogeneity Pursuit
 
-### 1.연구배경 및 문제의식
+### 1. 연구배경 및 문제의식
 
-혼합모형 기반 회귀에서는 단순히 중요한 설명변수를 찾는 것만으로 충분하지 않고, 그중에서도 실제로 군집 간 차이를 만들어내는 변수, 즉 source of heterogeneity를 구분하는 것이 더 해석가능하고 더 간명한 모형을 만든다. 최근의 선행 연구는 바로 이 점을 겨냥하여 predictor effect를 공통효과와 군집특이효과로 분해하고, 이를 통해 relevant predictor와 heterogeneity-driving predictor를 동시에 식별하는 regularized finite mixture effects regression을 제안하였다. 저자들은 이 접근이 모형 복잡도를 줄이고 해석력을 높이며, 실제 응용에서도 더 의미 있는 과학적 해석을 제공한다고 강조한다.
+혼합모형 기반 회귀분석에서는 단순히 유의미한 설명변수를 찾는 것을 넘어, 실제로 군집 간의 차이를 유발하는 변수, 즉 이질성의 원천(source of heterogeneity)을 식별하는 것이 모형의 간명성과 해석력을 극대화하는 핵심 과제이다. 최근의 선행 연구는 예측변수(predictor)의 효과를 공통효과(common effect)와 군집특이효과(cluster-specific effect)로 분해하고, 정규화된 유한 혼합효과 회귀(regularized finite mixture effects regression)를 통해 관련 변수(relevant predictor)와 이질성 유발 변수(heterogeneity-driving predictor)를 동시에 식별하는 방법론을 제안하였다.
 
-그러나 비지도학습, 특히 고차원 클러스터링에서는 이와 같은 "이질성의 원천 추적"이 상대적으로 덜 정식화되어 있다. 기존 sparse clustering이나 model-based clustering은 주로 군집 복원 자체나 변수선택에 초점을 맞추는 경우가 많고, 군집을 실제로 형성하는 핵심 좌표가 무엇인지, 그리고 이를 어떤 통계적 구조 아래에서 일관되게 추정할 것인지에 대한 정교한 effects-style parameterization은 상대적으로 부족하다.
+그러나 비지도학습, 특히 고차원 클러스터링 분야에서는 이러한 "이질성의 원천 추적"이 상대적으로 덜 정식화되어 있다. 기존의 희소 군집화(sparse clustering)나 모형 기반 군집화(model-based clustering)는 주로 군집의 복원 자체나 단순 변수 선택에 초점을 맞추고 있다. 즉, 군집을 실제로 형성하는 핵심 좌표가 무엇인지 식별하고, 이를 일관되게 추정하기 위한 효과 모형 기반의 파라미터화(effects-style parameterization) 연구는 현저히 부족한 실정이다.
 
-본 연구는 이러한 선행 연구의 문제의식을 비지도학습으로 확장한다. 즉, 반응변수 $Y_i$가 존재하지 않는 상황에서 군집 중심을 latent mean으로 보고, 이 latent mean을 공통 평균과 군집특이 편차로 분해하여 "어떤 변수들이 실제 군집 이질성의 원천인가"를 직접 추적하는 클러스터링 방법론을 개발하고자 한다. 해당 문헌에서 future direction으로 high-dimensional setting, cluster learning, multivariate setting의 확장을 명시적으로 제시한 점을 고려하면, 본 연구는 그 방향을 직접 이어받는 형태라고 볼 수 있다.
+본 연구는 선행 연구의 문제의식을 비지도학습 환경으로 확장한다. 반응변수 $Y_i$ 가 존재하지 않는 군집화 상황에서 군집의 중심을 잠재 평균(latent mean)으로 설정하고, 이를 공통 평균과 군집특이 편차로 분해함으로써 "어떤 변수들이 실제 군집 이질성의 원천인가"를 직접 추적하는 새로운 클러스터링 방법론을 제안하고자 한다. 이는 기존 문헌에서 향후 과제로 명시한 고차원 환경(high-dimensional setting) 및 군집 학습(cluster learning)으로의 직접적이고 논리적인 확장이다.
 
 ### 2. 연구목표
 
-본 연구의 1차 목표는 다음 세 가지이다.
+본 연구의 주요 목표는 다음과 같다.
 
-첫째, 고차원 데이터에서 군집 구조를 추정하면서 동시에 군집 형성에 실제로 기여하는 이질적 변수 집합을 식별하는 새로운 비지도 혼합모형을 제안한다.
+**첫째,** 고차원 데이터 환경에서 군집 구조를 추정함과 동시에, 군집 형성에 실질적으로 기여하는 이질적 변수 집합을 식별하는 새로운 비지도 희소 혼합모형을 제안한다.
 
-둘째, 기존 문헌의 effects-model parameterization을 비지도학습에 맞게 재해석하여, 군집 중심을 $\mu_j = \mu_0 + \delta_j$ 형태로 분해하는 parsimonious model을 구축한다.
+**둘째,** 기존 회귀 문헌의 효과 모형 파라미터화를 비지도학습에 맞게 재해석하여, 군집 중심을 $\mu_j = \mu_0 + \delta_j$ 형태로 분해하는 간명한(parsimonious) 모형을 구축한다.
 
-셋째, $p \gg n$ 환경에서 변수선택 일관성, 군집 오분류율, 평균 구조 추정오차 등에 대한 이론적 보장을 제시한다.
+**셋째,** 차원이 표본 수보다 훨씬 큰 $p \gg n$ 고차원 환경에서, 제안 모형의 변수 선택 일관성(selection consistency), 군집 오분류율(misclustering rate), 평균 구조 추정 오차 등에 대한 수학적/이론적 보장(theoretical guarantee)을 제시한다.
 
 ### 3. 핵심 연구질문
 
-본 연구는 다음 질문에 답하는 것을 목표로 한다.
+본 연구는 상기 목표를 달성하기 위해 다음의 핵심 질문들에 답하고자 한다.
 
-Q1. 비지도학습에서 "source of heterogeneity"를 어떻게 엄밀히 정의할 것인가?
-
-Q2. 군집 추정과 heterogeneity variable selection을 동시에 수행하는 정규화 mixture model은 어떻게 설계할 것인가?
-
-Q3. 고차원 환경에서 이 방법의 선택 일관성과 clustering consistency를 어떻게 보일 것인가?
-
-Q4. 분산 구조가 달라질 때 heterogeneity 정의를 어떻게 조정할 것인가?
+- **Q1.** 비지도학습 환경에서 "이질성의 원천(source of heterogeneity)"을 어떻게 통계적으로 엄밀하게 정의할 것인가?
+    
+- **Q2.** 군집 추정과 이질성 유발 변수 선택을 동시에 수행하기 위한 정규화 혼합모형(regularized mixture model) 및 페널티 함수는 어떻게 설계할 것인가?
+    
+- **Q3.** 고차원 환경에서 제안된 추정량의 변수 선택 일관성과 군집화 일관성(clustering consistency)을 어떻게 이론적으로 증명할 것인가?
+    
+- **Q4.** 공분산(분산) 구조가 이질적인 상황으로 확장될 때, 이질성(heterogeneity)의 정의와 식별 조건을 어떻게 조정할 것인가?
+    
 
 ### 4. 제안모형
 
-#### 4.1 기본 모형
+#### 4.1 기본 모형 (Baseline Model)
 
-관측치 $X_i = (X_{i1}, \dots, X_{ip})^\top \in \mathbb{R}^p$, 잠재 군집 $Z_i \in {1, \dots, K}$에 대하여 다음 baseline model을 제안한다.
+관측치 $X_i = (X_{i1}, \dots, X_{ip})^\top \in \mathbb{R}^p$ 와 잠재 군집 라벨 $Z_i \in \{ 1, \dots, K \}$ 에 대하여 다음과 같은 혼합모형을 제안한다.
 
 $$P(Z_i = j) = \pi_j, \quad j = 1, \dots, K$$
 
@@ -44,101 +45,68 @@ $$X_i \mid Z_i = j \sim N_p(\mu_j, \Sigma)$$
 
 $$\mu_j = \mu_0 + \delta_j, \quad \sum_{j=1}^K \delta_{jk} = 0, \quad k = 1, \dots, p$$
 
-여기서 $\mu_0 \in \mathbb{R}^p$는 전체 baseline mean이고, $\delta_j \in \mathbb{R}^p$는 군집 $j$의 mean shift이다. 따라서 각 군집의 중심은 $\mu_j = E(X_i \mid Z_i = j) = \mu_0 + \delta_j$ 이며, 이는 곧 latent mean이다. 따라서 "군집 중심을 latent mean으로 본다"는 해석은 정확하다. 다만 이것은 관측 response가 아니라 모수이며, 본 연구는 이 모수의 구조를 sparse하게 분해하는 데 초점을 둔다.
-
-이때 선행 연구에서 다루었던 공통효과/군집특이효과 분해 $\beta_{0k}, \beta_{jk}$ 를 비지도 setting에 맞게 $\mu_{0k}, \delta_{jk}$ 로 옮겨온 것으로 볼 수 있다. 즉, 해당 연구의 핵심 parameterization을 "회귀계수"가 아니라 "군집 평균"에 적용하는 것이다.
+여기서 $\mu_0 \in \mathbb{R}^p$ 는 전체 기준 평균(baseline mean)이며, $\delta_j \in \mathbb{R}^p$ 는 군집 $j$ 의 평균 편차(mean shift)이다. 각 군집의 중심은 $\mu_j = E(X_i \mid Z_i = j) = \mu_0 + \delta_j$ 로 표현된다. 이는 선행 연구의 회귀계수 분해( $\beta_{0k}, \beta_{jk}$ ) 아이디어를 비지도 설정의 잠재 평균 모수( $\mu_{0k}, \delta_{jk}$ )로 확장 적용한 것이며, 본 연구는 이 잠재 평균의 구조를 희소하게 분해하여 추정하는 데 초점을 둔다.
 
 #### 4.2 이질적 변수의 정의
 
-변수 $k$에 대하여 $\delta_{\cdot k} = (\delta_{1k}, \dots, \delta_{Kk})^\top$ 라 두면, 군집 이질성을 유발하는 변수 집합을 $S_H = \{k : \|\delta_{\cdot k}\|_2 \neq 0\}$ 로 정의한다.
+변수 $k$ 에 대하여 $\delta_{\cdot k} = (\delta_{1k}, \dots, \delta_{Kk})^\top$ 라 정의할 때, 군집 간 이질성을 유발하는 활성 변수 집합 $S_H$ 를 다음과 같이 정의한다.
 
-즉, $\delta_{1k} = \dots = \delta_{Kk} = 0$ 이면 변수 $k$는 모든 군집에서 평균이 동일하므로 군집 차이를 유발하지 않는다. 반대로 $\|\delta_{\cdot k}\|_2 > 0$ 이면 변수 $k$는 적어도 하나의 군집에서 평균 차이를 만들어내므로 heterogeneity-driving variable이다.
+$$S_H = \{ k : \|\delta_{\cdot k}\|_2 \neq 0 \}$$
 
-이 정의는 기존 연구에서 "relevant predictor 중에서 cluster-specific effect가 존재하는 predictor를 true source of heterogeneity로 본다" 는 논리를 비지도 setting으로 직접 옮긴 것이다. 또한 해당 문헌은 이런 구분이 전체 모형을 훨씬 더 parsimonious하게 만들 수 있음을 강조한다.
+즉, $\delta_{1k} = \dots = \delta_{Kk} = 0$ 이면 변수 $k$ 는 모든 군집에서 평균이 동일하므로 군집 간 차이를 유발하지 않는 노이즈 변수이다. 반대로 $\|\delta_{\cdot k}\|_2 > 0$ 이면 적어도 하나의 군집에서 유의미한 평균 차이를 만들어내므로 이질성 유발 변수(heterogeneity-driving variable)로 식별된다. 이는 기존 회귀 모형에서 군집특이효과를 지닌 예측변수를 판별하던 논리를 비지도 군집화 문제로 확장한 것이다.
 
-#### 4.3 공분산 구조: 왜 diagonal covariance부터 시작하는가
+#### 4.3 공분산 구조의 설정
 
-본 연구의 초기 모델 설정 및 1차 시뮬레이션에서는 $\Sigma_j = \Sigma = \text{diag}(\sigma_1^2, \dots, \sigma_p^2)$ 또는 가장 단순하게 $\Sigma = I_p$ 로 두는 것이 타당하다.
+본 연구는 모형의 개발 및 이론 전개의 1차적 단계로서 공통 대각 공분산 구조 $\Sigma_j = \Sigma = \mathrm{diag}(\sigma_1^2, \dots, \sigma_p^2)$ 를 가정한다.
 
-이 가정 아래에서는 $X_{i1}, \dots, X_{ip}$ are independent given $Z_i = j$ 가 된다. 즉, 군집이 주어졌을 때 좌표들이 서로 독립이라는 가장 기본적인 working model이다. 이는 "진짜 데이터가 무조건 독립이다"라는 주장이 아니라, mean heterogeneity selection 문제를 가장 선명하게 분리하기 위한 1차 모델링 선택이다.
-
-이러한 선택은 선행 연구의 scale-adjusted heterogeneity 논리와도 잘 맞는다. 해당 연구는 component variance가 heterogeneity의 해석과 정의에 직접 영향을 주며, component variances가 같을 때 raw effect와 scaled effect가 일치한다고 설명한다. 또한 multivariate extension에서는 covariance matrix의 차이가 source of heterogeneity의 정의 자체를 복잡하게 만든다고 명시한다. 따라서 본 연구의 1차 단계에서는 공통 diagonal covariance를 택해 문제를 정리하고, 이후 확장으로 correlated feature 혹은 unequal diagonal variance를 다루는 것이 전략적으로 적절하다.
+이는 변수 간 조건부 독립을 가정한 가장 기본적인 형태(working model)로서, 평균 기반 이질성(mean heterogeneity) 탐색 문제 자체에 수리적으로 집중하기 위한 전략적 선택이다. 선행 연구에서도 성분 분산(component variance)의 차이가 이질성의 해석에 직접적 영향을 미치며, 다변량 확장 시 공분산 행렬의 차이가 이질성 정의를 복잡하게 만든다고 지적한 바 있다. 따라서 본 연구는 공통 대각 공분산을 통해 기본 방법론과 이론을 정립한 후, 상관관계가 존재하는 특성(correlated features)이나 이질적 분산(unequal diagonal variance) 구조로 확장해 나갈 계획이다.
 
 ### 5. 추정방법
 
 #### 5.1 정규화된 목적함수
 
-모수 $\Theta = (\pi_1, \dots, \pi_K, \mu_0, \delta_1, \dots, \delta_K, \Sigma)$ 에 대해 다음 penalized log-likelihood를 고려한다.
+모수 $\Theta = (\pi_1, \dots, \pi_K, \mu_0, \delta_1, \dots, \delta_K, \Sigma)$ 에 대해 다음과 같은 페널티 벌점화 로그 우도함수(penalized log-likelihood)를 목적함수로 설정한다.
 
 $$\ell_n(\Theta) = \sum_{i=1}^n \log \left[ \sum_{j=1}^K \pi_j \phi_p(X_i; \mu_0 + \delta_j, \Sigma) \right] - \lambda \sum_{k=1}^p w_k \|\delta_{\cdot k}\|_2$$
 
-여기서 $w_k$는 adaptive weight이며 예를 들면 다음과 같이 pilot estimator로부터 구성할 수 있다.
+여기서 $w_k$ 는 Adaptive weight로, 사전 추정량(pilot estimator)을 활용하여 $w_k = (\|\tilde{\delta}_{\cdot k}\|_2 + \varepsilon)^{-\gamma}$ 와 같이 구성된다. 이 페널티 항은 변수 단위의 그룹 희소성(group sparsity)을 유도하여, 변수 $k$ 전체가 이질성의 원천인지 여부를 직접적으로 판별하게 해준다.
 
-$$w_k = (\|\tilde{\delta}_{\cdot k}\|_2 + \varepsilon)^{-\gamma}$$
+#### 5.2 식별성 제약 및 최적화 알고리즘
 
-이 penalty는 변수 단위의 group sparsity를 유도하므로, 한 변수 $k$가 전체적으로 군집 이질성의 원천인지 아닌지를 직접 판정하게 해준다.
-
-#### 5.2 식별성 제약
-
-$\mu_j = \mu_0 + \delta_j$ 만으로는 $\mu_0$와 $\delta_j$의 분해가 유일하지 않다. 따라서
-
-$$\sum_{j=1}^K \delta_{jk} = 0, \quad k = 1, \dots, p$$
-
-와 같은 sum-to-zero 제약이 필요하다. 이 제약은 모티브가 된 선행 연구에서 사용한 effects-model parameterization과 같은 역할을 하며, parameter identifiability를 위한 핵심 장치이다.
-
-#### 5.3 계산 알고리즘
-
-계산은 EM 알고리즘을 기본 골격으로 한다. 기존 문헌 역시 penalized mixture effects regression을 EM과 constrained penalized least squares 구조로 풀고 있으며, M-step에서는 linearly constrained $\ell_1$-penalized regression을 Bregman coordinate descent로 해결한다. 본 연구 역시 이 구조를 비지도 mixture mean model에 맞게 변형할 수 있다.
-
-E-step에서는 책임도(responsibility)를 계산한다.
+구조식 $\mu_j = \mu_0 + \delta_j$ 의 유일한 분해를 보장하기 위해 $\sum_{j=1}^K \delta_{jk} = 0$ 의 제약을 부여한다. 모수 추정은 EM 알고리즘을 기반으로 수행되며, E-step에서는 사후 책임도(responsibility) $\tau_{ij}$ 를 계산한다.
 
 $$\tau_{ij} = P(Z_i = j \mid X_i, \Theta) = \frac{\pi_j \phi_p(X_i; \mu_0 + \delta_j, \Sigma)}{\sum_{\ell=1}^K \pi_\ell \phi_p(X_i; \mu_0 + \delta_\ell, \Sigma)}$$
 
-M-step에서는 $\pi_j, \Sigma, \mu_0, \delta_j$를 갱신한다. 특히 $\Sigma$가 diagonal일 때 각 변수 $k$에 대한 업데이트는 거의 분리되어 다음과 같은 문제로 귀결된다.
+M-step에서는 $\Sigma$ 가 대각 행렬임을 이용하여 각 변수 $k$ 에 대한 블록별 최적화 문제로 분리한다.
 
-$$\min_{\mu_{0k}, \delta_{\cdot k}} \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^K \tau_{ij} \sigma_k^{-2} (x_{ik} - \mu_{0k} - \delta_{jk})^2 + \lambda w_k \|\delta_{\cdot k}\|_2$$
+$$\min_{\mu_{0k}, \delta_{\cdot k}} \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^K \tau_{ij} \sigma_k^{-2} (x_{ik} - \mu_{0k} - \delta_{jk})^2 + \lambda w_k \|\delta_{\cdot k}\|_2 \quad \text{s.t.} \quad \sum_{j=1}^K \delta_{jk} = 0$$
 
-subject to
-
-$$\sum_{j=1}^K \delta_{jk} = 0$$
-
-실제 구현에서는 $\mathbf{1}_K$의 직교여공간 basis $Q$를 써서 $\delta_{\cdot k} = Q \alpha_k$ 로 재파라미터화하면 제약이 사라져 group lasso 문제로 바뀐다.
-
-튜닝 파라미터 $\lambda$와 군집 수 $K$는 BIC, ICL, 혹은 clustering stability 기준을 사용해 선택할 수 있다. 선행 연구에서도 component 수와 penalty parameter 선택에 BIC를 사용하였다.
+실제 알고리즘 구현에서는 제약식을 내재화하기 위해 $\mathbf{1}_K$ 의 직교여공간 Basis $Q$ 를 도입하여 $\delta_{\cdot k} = Q \alpha_k$ 로 재파라미터화한다. 이를 통해 제약 조건이 없는(unconstrained) Group Lasso 문제로 변환하여 안정적이고 효율적인 최적화를 수행한다. 튜닝 파라미터 $\lambda$ 와 군집 수 $K$ 는 BIC(Bayesian Information Criterion) 등 정보량 기준을 통해 선택한다.
 
 ### 6. 이론적 연구목표
 
-기존 연구는 fixed $p, m$ 설정에서 adaptive estimator의 $\sqrt{n}$-consistency와 selection consistency를 제시한다. 본 연구의 박사논문 기여는 이 결과를 비지도 high-dimensional setting으로 확장하는 데 있다.
+본 학위논문(연구)의 핵심 기여는 전통적인 고정 차원(fixed $p, m$)에서 증명되었던 선택 일관성(selection consistency) 이론을 $p \gg n$ 의 고차원 비지도학습 환경으로 확장 증명하는 데 있다. 이를 위한 세부 이론적 목표는 다음과 같다.
 
-본 연구의 이론적 목표는 다음과 같다.
+**첫째, 식별성(Identifiability):** Label switching 현상을 제외하면 모수 $(\pi, \mu_0, \Delta, \Sigma)$ 가 유일하게 식별됨을 증명한다.
 
-첫째, 식별성. label switching을 제외하면 $(\pi, \mu_0, \Delta, \Sigma)$가 유일하게 식별됨을 보인다.
-
-둘째, 추정오차 경계. 희소도 $s = |S_H|$에 대해 다음과 같은 형태의 오차 경계를 목표로 한다.
+**둘째, 추정오차 경계(Estimation Error Bound):** 실제 활성 변수의 희소도 $s = |S_H|$ 에 대하여 다음 형태의 오차 상한을 유도한다.
 
 $$\|\hat{\Delta} - \Delta^*\|_F = O_p \left( \sqrt{\frac{s K \log p}{n}} \right)$$
 
-셋째, support recovery. 적절한 beta-min 조건 $\min_{k \in S_H} \|\delta_{\cdot k}^*\|_2 \ge c\lambda$ 하에서 $P(\hat{S}_H = S_H) \to 1$ 을 보이고자 한다.
+**셋째, 변수 선택 일관성(Support Recovery):** 적절한 beta-min 조건 $\min_{k \in S_H} \|\delta_{\cdot k}^*\|_2 \ge c\lambda$ 가 주어졌을 때, 참인 변수 집합을 완벽히 복원할 확률이 1로 수렴함( $P(\hat{S}_H = S_H) \to 1$ )을 증명한다.
 
-넷째, clustering consistency. MAP rule로 얻은 $\hat{Z}_i$에 대해 다음을 만족하거나, 또는 separation-dependent misclustering bound를 목표로 한다.
+**넷째, 군집화 일관성(Clustering Consistency):** MAP(Maximum A Posteriori) 규칙으로 얻은 추정 라벨 $\hat{Z}_i$ 에 대하여 오분류율 상한(misclustering bound)을 도출하거나, 다음을 만족함을 증명한다.
 
 $$\frac{1}{n} \sum_{i=1}^n I(\hat{Z}_i \neq Z_i^*) = o_p(1)$$
 
-이러한 결과를 위해 다음과 같은 기본 가정을 둘 수 있다.
+이러한 이론 전개를 위해 혼합 비율 및 분산의 유계성(boundedness), 강한 분리 조건(separation condition) $\min_{j \neq \ell} \sum_{k \in S_H} \sigma_k^{-2} (\delta_{jk}^* - \delta_{\ell k}^*)^2 \ge c_0$, 그리고 고차원 희소성 조건 $s \log p = o(n)$ 등을 기본 가정으로 활용할 계획이다.
 
-$$\pi_j^* \ge \pi_{\min} > 0, \quad 0 < c_\sigma \le \sigma_k^2 \le C_\sigma < \infty$$
+### 7. 연구의 차별성 및 향후 확장 계획
 
-$$\min_{j \neq \ell} \sum_{k \in S_H} \frac{(\delta_{jk}^* - \delta_{\ell k}^*)^2}{\sigma_k^2} \ge c_0, \quad s \log p = o(n)$$
+본 연구의 가장 큰 차별점은 비지도 군집화 과정에서 단순히 "유용한 변수"를 선택하는 데 그치지 않고, 평균 구조의 좌표별 분해를 통해 **"무엇이 군집을 분리하게 만드는가(Why do clusters separate?)"**에 대한 근원적이고 해석 가능한 해답을 제공한다는 점이다. 이는 순수 평균-이동 군집화(pure mean-shift clustering) 문제에서 가장 통계적으로 투명하게 이질성을 추적하는 방법론이 될 것이다.
 
-### 7. 기존 연구와의 차별성
-
-본 연구의 차별점은 단순히 "클러스터링에 유용한 변수"를 고르는 것이 아니라, 군집 중심의 좌표별 분해를 통해 "왜 군집이 갈리는가"를 직접 묻는다는 점에 있다.
-
-앞선 선행 연구에서는 $S_R \quad \text{vs} \quad S_H$ 의 구분이 중요했다. 비지도 baseline에서는 우선 $S_H$, 즉 군집 평균 차이를 유발하는 변수 집합을 주된 목표로 둔다. 이는 pure mean-shift clustering에서 가장 자연스럽고 통계적으로 명확한 대상이다.
-
-다만, 기존 모형의 "common but relevant variable"까지 완전히 재현하려면 향후 다음과 같은 확장모형을 고려할 수 있다.
+본 연구는 1차적으로 평균 이질성(mean heterogeneity) 선택 문제에 집중하여 탄탄한 이론적 토대를 마련할 것이다. 이후, 데이터 전반에 흐르는 공통 구조(common structure)와 이질적 구조를 모두 포괄하기 위해 다음과 같은 요인 모형(factor model) 형태의 확장 연구를 계획하고 있다.
 
 $$X_i = \mu_0 + \Lambda f_i + \delta_{Z_i} + \varepsilon_i, \quad \varepsilon_i \sim N_p(0, \Psi)$$
 
-여기서 $\Lambda f_i$는 전체 표본의 공통 저차원 구조, $\delta_{Z_i}$는 군집특이 평균구조를 뜻한다. 이 경우 "공통 구조 변수"와 "이질성 유발 변수"를 동시에 구분할 수 있다. 그러나 이것은 2단계 또는 후속 장의 확장 주제로 두고, 본 연구의 1차적인 범위 내에서는 mean heterogeneity selection에 집중하는 것이 바람직하다.
-
+위 모형에서 $\Lambda f_i$ 는 표본 전체에 공통으로 존재하는 저차원 구조(common low-dimensional structure)를, $\delta_{Z_i}$ 는 군집특이적 평균 구조를 나타낸다. 이러한 후속 연구를 통해 공통 기저 변수와 이질성 유발 변수를 동시에 식별하는 통합적 비지도학습 프레임워크를 완성할 수 있을 것으로 기대한다.
