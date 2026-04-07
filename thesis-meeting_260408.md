@@ -107,10 +107,9 @@ $$S_H = \left\lbrace k : \|\delta_{\cdot k}\|_2 \neq 0 \right\rbrace$$
 
 본 연구의 초기 모델 설정 및 1차 시뮬레이션에서는 다음과 같이 두는 것이 타당하다.
 
-$$\Sigma_j = \Sigma = \operatorname{diag}(\sigma_1^2, \dots, \sigma_p^2)$$
+$$\Sigma_j = \Sigma = \mathrm{diag}(\sigma_1^2, \dots, \sigma_p^2)$$
 
-또는 가장 단순하게 $\Sigma = I_p$로 둔다. 이 가정 아래에서는 군집이 주어졌을 때 각 좌표가 조건부 독립이므로, mean heterogeneity selection 문제를 가장 선명하게 분리하여 볼 수 있다. 이는 "실제 데이터가 반드시 독립이다"라는 주장이 아니라, 1차 단계에서 mean heterogeneity 자체를 먼저 정교하게 정식화하기 위한 working model이다.
-
+또는 가장 단순하게 $\Sigma = I_p$ 로 둔다. 이 가정 아래에서는 군집이 주어졌을 때 각 좌표가 조건부 독립이므로, mean heterogeneity selection 문제를 가장 선명하게 분리하여 볼 수 있다. 이는 "실제 데이터가 반드시 독립이다"라는 주장이 아니라, 1차 단계에서 mean heterogeneity 자체를 먼저 정교하게 정식화하기 위한 working model이다.
 원 논문 역시 component variance가 heterogeneity 해석에 직접 영향을 주며, covariance structure가 달라질 경우 source of heterogeneity의 정의가 복잡해진다고 논의한다. 따라서 본 연구에서도 1차 단계에서는 공통 diagonal covariance로 문제를 정리하고, 이후 확장으로 unequal diagonal variance, correlated feature, 또는 cluster-specific covariance를 고려하는 것이 전략적으로 적절하다.
 
 ---
