@@ -117,10 +117,9 @@ $$\eta_{jk} = \frac{\mu_{0k}+\delta_{jk}}{\sigma_{jk}}$$
 
 를 정의하고,
 
-$$S_H^{\mathrm{scaled}} = \left\{ k: (\eta_{1k},\dots,\eta_{Kk})^\top \neq c\mathbf{1}_K, \forall c\in\mathbb{R} \right\}$$
+$$S_H^{\mathrm{scaled}} = \left\lbrace k: (\eta_{1k},\dots,\eta_{Kk})^\top \neq c\mathbf{1}_K, \forall c\in\mathbb{R} \right\rbrace$$
 
 와 같은 scaled mean heterogeneity 개념을 도입할 수 있다. centered-data 표현에서 $\mu_{0k}=0$이면 이는 $\delta_{jk}/\sigma_{jk}$ 비교와 동일해진다. 이 정의는 원 논문의 scaled source 개념을 평균혼합모형으로 옮긴 직접적인 확장이다.
-
 #### 5.4 공분산 구조: 왜 diagonal covariance부터 시작하는가
 
 본 연구의 1차 모델과 초기 시뮬레이션에서는
