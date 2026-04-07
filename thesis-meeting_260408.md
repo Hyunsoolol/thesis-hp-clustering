@@ -8,7 +8,7 @@
 
 본 보고서는 Li et al.의 heterogeneity pursuit 논문을 직접 복제하는 것이 아니라, 그 핵심 문제의식인 “어떤 변수가 군집 간 차이를 실제로 유발하는가?”를 비지도 평균혼합모형(mean-mixture)으로 재구성한 1차 연구 구상을 담고 있다.
 
-원 논문은 혼합회귀에서 공통효과와 군집특이효과를 분해하고, adaptive $\ell_1$ penalty 및 generalized lasso 표현을 통해 relevant predictor와 source of heterogeneity를 동시에 식별한다. 반면 본 연구의 현재 범위는 outcome이 없는 평균혼합모형에서 군집 간 평균 차이를 유발하는 좌표(mean-heterogeneity-driving coordinates)를 식별하는 데 초점을 둔다. 따라서 본 연구는 원 논문의 직접적 비지도화라기보다, 그 문제의식을 mean-shift clustering으로 옮긴 방법론이라고 이해하는 것이 가장 정확하다.
+원 논문은 혼합회귀에서 공통효과와 군집특이효과를 분해하고, adaptive $\ell_1$ penalty 및 generalized lasso 표현을 통해 relevant predictor와 source of heterogeneity를 동시에 식별한다. 반면 본 연구의 현재 범위는 outcome이 없는 평균혼합모형에서 군집 간 평균 차이를 유발하는 좌표(mean-heterogeneity-driving coordinates)를 식별하는 데 초점을 둔다. 따라서 본 연구는 원 논문의 직접적 비지도화라기보다, 그 문제의식을 mean-shift clustering으로 옮긴 방법론이라고 이해하는 가장 정확하다.
 
 현재 버전의 핵심 개선 사항은 다음과 같다.
 
@@ -16,15 +16,18 @@
     
 - **식별성 제약의 안정화:** 기존의 $\sum_j \pi_j \delta_j = 0$형 제약 대신, 아래와 같은 sum-to-zero constraint를 사용하여 ANOVA식 effects parameterization에 더 가깝게 만들었다. 이는 원 논문에서의 effects-model parameterization과 문제의식상 대응된다.
     
-    $$ \sum_{j=1}^K \delta_{jk} = 0, \quad k=1,\dots,p $$
+    $$\sum_{j=1}^K \delta_{jk} = 0, \quad k=1,\dots,p$$
     
 - **제약을 보존하는 재파라미터화:** 직교여공간 basis $Q$를 사용하여 재파라미터화하면, 제약을 자동으로 만족하면서 희소성을 깨지 않는 안정적인 최적화가 가능하다.
     
-    $$ \delta_{\cdot k} = Q\alpha_k $$
+    $$\delta_{\cdot k} = Q\alpha_k$$
     
 - **adaptive penalty의 필요성 명시:** 원 논문은 nonadaptive estimator보다 adaptive estimator가 selection consistency와 낮은 오선택률 측면에서 더 우수함을 보였다. 따라서 현재 연구미팅용 HP 결과는 nonadaptive pilot으로 이해하고, 최종 논문에서는 adaptive group penalty를 기본형으로 정리하는 것이 더 적절하다.
     
 - **현재 시뮬레이션 결과의 위상 정리:** 현재 표는 각 신호 강도에 대한 대표 실행 결과에 해당한다. 정식 논문에서는 원 논문처럼 반복 Monte Carlo 설계, 평균 및 표준오차 보고, correlated predictors와 unequal mixing 보조실험까지 포함하는 방향으로 확장하는 것이 바람직하다.
+    
+
+---
 
 ## Part I. 이론 및 모형
 
@@ -40,11 +43,11 @@
 
 원 논문의 기본 모형은 혼합회귀에서 공통효과 $\beta_0$와 군집특이효과 $\beta_j$를 분해하는 것이다.
 
-$$ y = x^\top \beta_0 + x^\top \beta_j + \varepsilon_j $$
+$$y = x^\top \beta_0 + x^\top \beta_j + \varepsilon_j$$
 
 이에 대응하여 본 연구는 비지도 setting에서 군집 평균을 다음과 같이 분해한다.
 
-$$ \mu_j = \mu_0 + \delta_j $$
+$$\mu_j = \mu_0 + \delta_j$$
 
 즉, 원 논문에서의 공통효과는 현재 모형에서 grand mean parameter $\mu_0$에 대응하고, 원 논문에서의 cluster-specific effects는 현재 모형의 mean deviation $\delta_j$에 대응한다. 다만 원 논문의 $S_R$–$S_H$ 구조를 현재 1차 비지도 모형이 그대로 재현하는 것은 아니다. 현재 모형은 사실상 $S_H$-유사 객체, 즉 mean heterogeneity를 유발하는 좌표 집합만을 직접 식별한다. 이 점을 명확히 하는 것이 연구 범위를 선명하게 만든다.
 
@@ -82,17 +85,17 @@ $$ \mu_j = \mu_0 + \delta_j $$
 
 관측치 $X_i=(X_{i1},\dots,X_{ip})^\top \in \mathbb{R}^p$, 잠재 군집 $Z_i \in {1,\dots,K}$에 대하여 다음 baseline model을 제안한다.
 
-$$ P(Z_i=j) = \pi_j, \quad j=1,\dots,K $$
+$$P(Z_i=j) = \pi_j, \quad j=1,\dots,K$$
 
-$$ X_i \mid Z_i=j \sim N_p(\mu_j,\Sigma) $$
+$$X_i \mid Z_i=j \sim N_p(\mu_j,\Sigma)$$
 
-$$ \mu_j = \mu_0 + \delta_j, \quad \sum_{j=1}^K \delta_{jk}=0, \quad k=1,\dots,p $$
+$$\mu_j = \mu_0 + \delta_j, \quad \sum_{j=1}^K \delta_{jk}=0, \quad k=1,\dots,p$$
 
 여기서 $\mu_0 \in \mathbb{R}^p$는 sum-to-zero coding 하의 grand mean parameter이고, $\delta_j \in \mathbb{R}^p$는 군집 $j$의 mean deviation vector이다. 따라서 각 군집의 중심은 $\mu_j = E(X_i \mid Z_i=j) = \mu_0 + \delta_j$로 표현된다.
 
 중요한 점은, 현재 제약 $\sum_{j=1}^K \delta_{jk}=0$ 하에서 $\mu_0$는 일반적으로 marginal population mean과 동일하지 않다는 것이다. 실제로
 
-$$ E(X_i) = \sum_{j=1}^K \pi_j\mu_j = \mu_0 + \sum_{j=1}^K \pi_j\delta_j $$
+$$E(X_i) = \sum_{j=1}^K \pi_j\mu_j = \mu_0 + \sum_{j=1}^K \pi_j\delta_j$$
 
 이므로, $\mu_0$는 $\pi_j$가 모두 같거나 $\sum_j \pi_j\delta_j=0$인 특수한 경우에만 marginal mean과 일치한다. 따라서 본 연구에서 $\mu_0$는 “전체 평균”이라기보다 effects-style parameterization에서의 기준점 역할을 하는 grand mean parameter로 해석하는 것이 정확하다.
 
@@ -100,7 +103,7 @@ $$ E(X_i) = \sum_{j=1}^K \pi_j\mu_j = \mu_0 + \sum_{j=1}^K \pi_j\delta_j $$
 
 변수 $k$에 대하여 $\delta_{\cdot k} = (\delta_{1k},\dots,\delta_{Kk})^\top$라 두면, 평균 기반 이질성을 유발하는 변수 집합을 다음과 같이 정의한다.
 
-$$ S_H = \{k: \|\delta_{\cdot k}\|_2 \neq 0\} $$
+$$S_H = \{k: \|\delta_{\cdot k}\|_2 \neq 0\}$$
 
 즉, $\delta_{1k}=\cdots=\delta_{Kk}=0$이면 변수 $k$는 모든 군집에서 평균이 동일하므로 군집 간 mean difference를 유발하지 않는다. 반대로 $\|\delta_{\cdot k}\|_2 > 0$이면 변수 $k$는 적어도 하나의 군집에서 평균 차이를 만들어내므로 mean-heterogeneity-driving variable이다.
 
@@ -108,13 +111,13 @@ $$ S_H = \{k: \|\delta_{\cdot k}\|_2 \neq 0\} $$
 
 #### 5.3 scaled mean heterogeneity의 가능성
 
-원 논문은 component variance가 다를 때 raw source와 scaled source of heterogeneity를 구분한다. 현재 1차 baseline에서는 공통 $\Sigma$를 가정하므로 raw mean heterogeneity와 scaled mean heterogeneity의 차이가 사라진다. 그러나 향후 $\Sigma_j = \operatorname{diag}(\sigma_{j1}^2,\dots,\sigma_{jp}^2)$와 같은 unequal diagonal variance를 허용한다면, 대각공분산 setting에서의 자연스러운 확장으로
+원 논문은 component variance가 다를 때 raw source와 scaled source of heterogeneity를 구분한다. 현재 1차 baseline에서는 공통 $\Sigma$를 가정하므로 raw mean heterogeneity와 scaled mean heterogeneity의 차이가 사라진다. 그러나 향후 $\Sigma_j = \mathrm{diag}(\sigma_{j1}^2,\dots,\sigma_{jp}^2)$와 같은 unequal diagonal variance를 허용한다면, 대각공분산 setting에서의 자연스러운 확장으로
 
-$$ \eta_{jk} = \frac{\mu_{0k}+\delta_{jk}}{\sigma_{jk}} $$
+$$\eta_{jk} = \frac{\mu_{0k}+\delta_{jk}}{\sigma_{jk}}$$
 
 를 정의하고,
 
-$$ S_H^{\mathrm{scaled}} = \left\{ k: (\eta_{1k},\dots,\eta_{Kk})^\top \neq c\mathbf{1}_K, \forall c\in\mathbb{R} \right\} $$
+$$S_H^{\mathrm{scaled}} = \left\{ k: (\eta_{1k},\dots,\eta_{Kk})^\top \neq c\mathbf{1}_K, \forall c\in\mathbb{R} \right\}$$
 
 와 같은 scaled mean heterogeneity 개념을 도입할 수 있다. centered-data 표현에서 $\mu_{0k}=0$이면 이는 $\delta_{jk}/\sigma_{jk}$ 비교와 동일해진다. 이 정의는 원 논문의 scaled source 개념을 평균혼합모형으로 옮긴 직접적인 확장이다.
 
@@ -122,7 +125,7 @@ $$ S_H^{\mathrm{scaled}} = \left\{ k: (\eta_{1k},\dots,\eta_{Kk})^\top \neq c\ma
 
 본 연구의 1차 모델과 초기 시뮬레이션에서는
 
-$$ \Sigma_j = \Sigma = \operatorname{diag}(\sigma_1^2,\dots,\sigma_p^2) $$
+$$\Sigma_j = \Sigma = \mathrm{diag}(\sigma_1^2,\dots,\sigma_p^2)$$
 
 또는 가장 단순하게 $\Sigma = I_p$를 가정한다. 이 경우 군집이 주어졌을 때 좌표들이 조건부 독립이므로 mean heterogeneity selection 문제를 가장 선명하게 분리할 수 있다. 이는 “실제 데이터가 반드시 독립이다”라는 뜻이 아니라, 1차 단계에서 mean structure 자체를 먼저 정교하게 분석하기 위한 working model이다.
 
@@ -132,7 +135,7 @@ $$ \Sigma_j = \Sigma = \operatorname{diag}(\sigma_1^2,\dots,\sigma_p^2) $$
 
 모수 $\Theta = (\pi_1,\dots,\pi_K,\mu_0,\delta_1,\dots,\delta_K,\Sigma)$에 대해 다음과 같은 normalized penalized log-likelihood를 고려한다.
 
-$$ \mathcal{L}_n(\Theta) = \frac{1}{n}\sum_{i=1}^n \log\left[ \sum_{j=1}^K \pi_j \phi_p(X_i;\mu_0+\delta_j,\Sigma) \right] - \lambda_n \sum_{k=1}^p w_k \|\delta_{\cdot k}\|_2 $$
+$$\mathcal{L}_n(\Theta) = \frac{1}{n}\sum_{i=1}^n \log\left[ \sum_{j=1}^K \pi_j \phi_p(X_i;\mu_0+\delta_j,\Sigma) \right] - \lambda_n \sum_{k=1}^p w_k \|\delta_{\cdot k}\|_2$$
 
 여기서 $w_k$는 adaptive weight이며, 예를 들어 pilot estimator $\tilde{\delta}$를 이용해 $w_k = (|\tilde{\delta}_{\cdot k}|_2 + \varepsilon)^{-\gamma}$로 둘 수 있다.
 
@@ -142,17 +145,17 @@ $$ \mathcal{L}_n(\Theta) = \frac{1}{n}\sum_{i=1}^n \log\left[ \sum_{j=1}^K \pi_j
 
 $\mu_j = \mu_0 + \delta_j$만으로는 $\mu_0$와 $\delta_j$의 분해가 유일하지 않다. 따라서 아래와 같은 sum-to-zero constraint가 필요하다. 이는 원 논문에서의 effects-model parameterization과 동일한 역할을 하는 식별성 제약이다.
 
-$$ \sum_{j=1}^K \delta_{jk}=0, \quad k=1,\dots,p $$
+$$\sum_{j=1}^K \delta_{jk}=0, \quad k=1,\dots,p$$
 
 #### 6.3 계산 알고리즘
 
 계산은 generalized EM 형태로 정리할 수 있다. E-step에서는 책임도를 계산한다.
 
-$$ \tau_{ij} = P(Z_i=j\mid X_i,\Theta) = \frac{ \pi_j \phi_p(X_i;\mu_0+\delta_j,\Sigma) }{ \sum_{\ell=1}^K \pi_\ell \phi_p(X_i;\mu_0+\delta_\ell,\Sigma) } $$
+$$\tau_{ij} = P(Z_i=j\mid X_i,\Theta) = \frac{ \pi_j \phi_p(X_i;\mu_0+\delta_j,\Sigma) }{ \sum_{\ell=1}^K \pi_\ell \phi_p(X_i;\mu_0+\delta_\ell,\Sigma) }$$
 
 M-step에서는 $\pi_j,\Sigma,\mu_0,\delta_j$를 갱신한다. 특히 $\Sigma$가 diagonal일 때, 각 변수 $k$에 대한 군집편차 블록은 거의 분리되어 다음과 같은 문제로 귀결된다.
 
-$$ \min_{\mu_{0k}, \delta_{\cdot k}} \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^K \tau_{ij}\sigma_k^{-2}(x_{ik}-\mu_{0k}-\delta_{jk})^2 + \lambda_n w_k \|\delta_{\cdot k}\|_2 $$
+$$\min_{\mu_{0k}, \delta_{\cdot k}} \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^K \tau_{ij}\sigma_k^{-2}(x_{ik}-\mu_{0k}-\delta_{jk})^2 + \lambda_n w_k \|\delta_{\cdot k}\|_2$$
 
 subject to $\sum_{j=1}^K \delta_{jk}=0$
 
@@ -170,7 +173,7 @@ subject to $\sum_{j=1}^K \delta_{jk}=0$
     
 2. **추정오차 경계:** 희소도 $s=|S_H|$에 대해 다음과 같은 형태의 오차 경계를 목표로 한다.
     
-    $$ \|\hat{\Delta}-\Delta^*\|_F = O_p\left( \sqrt{\frac{sK\log p}{n}} \right) $$
+    $$\|\hat{\Delta}-\Delta^*\|_F = O_p\left( \sqrt{\frac{sK\log p}{n}} \right)$$
     
 3. **support recovery:** 적절한 beta-min 조건 $\min_{k\in S_H}\|\delta_{\cdot k}^*\|_2 \ge c\lambda_n$ 하에서 $P(\hat{S}_H = S_H) \to 1$을 목표로 한다.
     
@@ -185,9 +188,11 @@ subject to $\sum_{j=1}^K \delta_{jk}=0$
 
 기본 가정의 예로는 다음 등을 둘 수 있다.
 
-$$ \pi_j^* \ge \pi_{\min}>0, \quad 0 < c_\sigma \le \sigma_k^2 \le C_\sigma < \infty, \quad s\log p = o(n) $$
+$$\pi_j^* \ge \pi_{\min}>0, \quad 0 < c_\sigma \le \sigma_k^2 \le C_\sigma < \infty, \quad s\log p = o(n)$$
 
-## Part II. 시뮬레이션 결과
+---
+
+## Part II. 연속형 혼합모형 시뮬레이션 결과
 
 본 절의 시뮬레이션은 제안 모형이 “모든 형태의 cluster-forming variable”을 찾는지 검증하는 것이 아니라, 공통 공분산 구조 하에서 군집 간 평균 차이를 유발하는 변수(mean-heterogeneity-driving variables)를 얼마나 정확히 식별하는지, 그리고 그러한 선택이 실제 군집 성능 개선으로 이어지는지를 경험적으로 확인하는 데 목적이 있다.
 
@@ -210,17 +215,17 @@ $$ \pi_j^* \ge \pi_{\min}>0, \quad 0 < c_\sigma \le \sigma_k^2 \le C_\sigma < \i
 
 **[시나리오 1] 명확한 신호 환경 ($a=1.8$)**
 
-| **방법론**                           | **사용 차원** | **변수 선택** | **ARI** | **TPR** | **FPR** | **S^** |
-| --------------------------------- | --------- | --------- | ------- | ------- | ------- | ------ |
-| K-means                           | 20        | No        | 0.438   | -       | -       | -      |
-| GMM (Unpenalized)                 | 20        | No        | 0.409   | -       | -       | -      |
-| Sparse K-means                    | 20        | Yes       | 0.921   | 1.000   | 1.000   | 20     |
-| $\rightarrow$ + Refit             | 20        | -         | 0.409   | -       | -       | -      |
-| Naive Lasso (prototype)           | 5         | Yes       | 0.822   | 1.000   | 0.000   | 5      |
-| $\rightarrow$ + Refit             | 5         | -         | 0.912   | -       | -       | -      |
-| Proposed HP (nonadaptive pilot)   | 20        | Yes       | 0.822   | 1.000   | 0.000   | 5      |
-| $\rightarrow$ Proposed HP + Refit | 5         | -         | 0.912   | -       | -       | -      |
-| Oracle GMM (True Vars)            | 5         | Ideal     | 0.912   | 1.000   | 0.000   | 5      |
+|**방법론**|**사용 차원**|**변수 선택**|**ARI**|**TPR**|**FPR**|**S^**|
+|---|---|---|---|---|---|---|
+|K-means|20|No|0.438|-|-|-|
+|GMM (Unpenalized)|20|No|0.409|-|-|-|
+|Sparse K-means|20|Yes|0.921|1.000|1.000|20|
+|$\rightarrow$ + Refit|20|-|0.409|-|-|-|
+|Naive Lasso (prototype)|5|Yes|0.822|1.000|0.000|5|
+|$\rightarrow$ + Refit|5|-|0.912|-|-|-|
+|Proposed HP (nonadaptive pilot)|20|Yes|0.822|1.000|0.000|5|
+|$\rightarrow$ Proposed HP + Refit|5|-|0.912|-|-|-|
+|Oracle GMM (True Vars)|5|Ideal|0.912|1.000|0.000|5|
 
 **[시나리오 2] 중간 신호 환경 ($a=1.5$)**
 
@@ -267,7 +272,7 @@ $$ \pi_j^* \ge \pi_{\min}>0, \quad 0 < c_\sigma \le \sigma_k^2 \le C_\sigma < \i
 
 ### 5. 종합 정리
 
-현재 pilot simulation을 종합하면, 제안 방법은 공통 공분산 구조 하에서의 mean heterogeneity selection 문제에 대해 중간 이상의 신호 구간에서 진짜 좌표를 매우 정확히 복원하며, 선택 단계의 shrinkage bias는 refit 단계에서 상당 부분 제거될 수 있음을 확인했다.
+현재 pilot simulation을 종합하면, 제안 방법은 공통 공분 구조 하에서의 mean heterogeneity selection 문제에 대해 중간 이상의 신호 구간에서 진짜 좌표를 매우 정확히 복원하며, 선택 단계의 shrinkage bias는 refit 단계에서 상당 부분 제거될 수 있음을 확인했다.
 
 ---
 
@@ -298,7 +303,7 @@ $$ \pi_j^* \ge \pi_{\min}>0, \quad 0 < c_\sigma \le \sigma_k^2 \le C_\sigma < \i
 
 현재 1차 모형은 mean heterogeneity selection에 집중하지만, 향후 아래와 같은 구조로 더 풍부한 비지도 모형 확장이 가능하다.
 
-$$ X_i = \mu_0 + \Lambda f_i + \delta_{Z_i} + \varepsilon_i, \quad \varepsilon_i \sim N_p(0,\Psi) $$
+$$X_i = \mu_0 + \Lambda f_i + \delta_{Z_i} + \varepsilon_i, \quad \varepsilon_i \sim N_p(0,\Psi)$$
 
 여기서 $\Lambda f_i$는 전체 표본에 공통적인 저차원 구조를 나타내고, $\delta_{Z_i}$는 군집특이 평균구조를 나타낸다.
 
