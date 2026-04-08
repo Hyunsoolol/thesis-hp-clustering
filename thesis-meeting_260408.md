@@ -447,7 +447,7 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat S_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{|
 | Oracle-feature baseline    | 5.000     | 0.698     | 1.000     | 0.000     | 5.000     |
 | True-parameter oracle      | 5.000     | 0.712     | 1.000     | 0.000     | 5.000     |
 
-<img width="1038" height="670" alt="image" src="https://github.com/user-attachments/assets/2b47a56c-410b-4278-9c38-f1b30f4fe505" />
+<img width="1176" height="602" alt="image" src="https://github.com/user-attachments/assets/e84158b0-c860-472e-b940-bc7b40d34f4d" />
 
 ### 6.3 해석
 
