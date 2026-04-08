@@ -349,7 +349,6 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat S_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{|
 | Oracle-feature baseline    | 3.000     | 0.682     | 1.000     | 0.000     | 3.000     |
 | True-parameter oracle      | 3.000     | 0.705     | 1.000     | 0.000     | 3.000     |
 
-<img width="1370" height="670" alt="image" src="https://github.com/user-attachments/assets/39770fda-2374-49c3-8ac2-e480c61ab300" />
 
 **[시나리오 2] 중간 신호 환경 ($a=1.4$)**
 
@@ -380,6 +379,10 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat S_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{|
 | **Proposed HP (No Refit)** | 20.000    | **0.448** | **1.000** | **0.029** | **3.500** |
 | Oracle-feature baseline    | 3.000     | 0.463     | 1.000     | 0.000     | 3.000     |
 | True-parameter oracle      | 3.000     | 0.498     | 1.000     | 0.000     | 3.000     |
+
+
+<img width="1370" height="670" alt="image" src="https://github.com/user-attachments/assets/748ebf11-3d44-481f-88f6-7b5bc9a523d9" />
+
 
 ### 5.3 해석
 
