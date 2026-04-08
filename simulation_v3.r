@@ -45,9 +45,9 @@ for (rep_idx in 1:n_rep) {
     # Step 1. 시뮬레이션 세팅
     # ==============================================================================
     n <- 300
-    p <- 300
+    p <- 20
     K <- 3
-    q <- 5
+    q <- 3
     a <- signal_grid[scenario_idx]
     
     pi_true <- rep(1 / K, K)
@@ -73,7 +73,7 @@ for (rep_idx in 1:n_rep) {
     true_vars <- 1:q
     
     cat("\n\n===================================================================================================\n")
-    cat(sprintf(" [시나리오 %d] a = %.1f (n=%d, p=%d, K=%d)\n", scenario_idx, a, n, p, K))
+    cat(sprintf(" [시나리오 %d] a = %.1f (n=%d, p=%d, K=%d, q=%d)\n", scenario_idx, a, n, p, K, q))
     cat("===================================================================================================\n")
     
     # ==============================================================================
@@ -808,3 +808,72 @@ summary_results_display <- summary_results_display[, c("Scenario", "Method", "Re
 
 print(summary_results_display, row.names = FALSE)
 cat("===================================================================================================\n")
+
+
+# ==============================================================================
+# Step 10. 방법론 및 시나리오별 지표 박스플롯 (Boxplots) 시각화
+# ==============================================================================
+cat("\n\n===================================================================================================\n")
+cat(" [Step 10] 방법론 및 시나리오별 박스플롯 시각화\n")
+cat("===================================================================================================\n")
+
+
+# Method 변수를 범주형(Factor)으로 변환하여 표에 출력된 순서 그대로 고정
+combined_results_numeric$Method <- factor(combined_results_numeric$Method, 
+                                          levels = unique(combined_results_numeric$Method))
+
+# 논문 및 보고서용 깔끔한 공통 테마 설정
+my_theme <- theme_bw() + 
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, size = 10), # x축 라벨 45도 회전
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(color = "darkred", size = 10),
+    legend.position = "none", # x축에 이미 이름이 있으므로 범례는 생략하여 그래프 공간 확보
+    panel.grid.minor = element_blank()
+  )
+
+# 1) ARI (군집 복원 성능) Boxplot
+p_ari <- ggplot(subset(combined_results_numeric, !is.na(ARI)), 
+                aes(x = Method, y = ARI, fill = Method)) +
+  geom_boxplot(alpha = 0.7, outlier.size = 1.5) +
+  facet_wrap(~ Scenario) +
+  labs(title = "1. Clustering Performance (ARI)", x = "", y = "Adjusted Rand Index (ARI)") +
+  my_theme
+
+# 2) TPR (정답 변수 포함 비율) Boxplot
+p_tpr <- ggplot(subset(combined_results_numeric, !is.na(TPR)), 
+                aes(x = Method, y = TPR, fill = Method)) +
+  geom_boxplot(alpha = 0.7, outlier.size = 1.5) +
+  facet_wrap(~ Scenario) +
+  labs(title = "2. True Positive Rate (TPR)", x = "", y = "TPR (Signal Recovery)") +
+  my_theme
+
+# 3) FPR (노이즈 변수 포함 비율) Boxplot
+p_fpr <- ggplot(subset(combined_results_numeric, !is.na(FPR)), 
+                aes(x = Method, y = FPR, fill = Method)) +
+  geom_boxplot(alpha = 0.7, outlier.size = 1.5) +
+  facet_wrap(~ Scenario, scales = "free_y") + # FPR은 값 차이가 크므로 y축 스케일을 시나리오별로 유동적으로 설정
+  labs(title = "3. False Positive Rate (FPR)", x = "", y = "FPR (Noise Inclusion)") +
+  my_theme
+
+# 4) S_hat (선택된 변수 총 개수) Boxplot
+p_shat <- ggplot(subset(combined_results_numeric, !is.na(S_hat)), 
+                 aes(x = Method, y = S_hat, fill = Method)) +
+  geom_boxplot(alpha = 0.7, outlier.size = 1.5) +
+  facet_wrap(~ Scenario, scales = "free_y") +
+  # 정답 변수 개수(q)를 빨간 점선으로 표시하여 직관적인 비교 가능
+  geom_hline(yintercept = q, linetype = "dashed", color = "red", size = 1) + 
+  labs(title = "4. Number of Selected Variables (S_hat)", 
+       subtitle = sprintf("Red dashed line indicates the true number of signal variables (q = %d)", q),
+       x = "", y = "Number of Selected Variables") +
+  my_theme
+
+# 생성된 4개의 플롯 화면에 출력 (RStudio Plots 창 확인)
+print(p_ari)
+print(p_tpr)
+print(p_fpr)
+print(p_shat)
+
+cat("박스플롯 4종(ARI, TPR, FPR, S_hat) 생성이 완료되었습니다.\n")
+cat("===================================================================================================\n")
+
