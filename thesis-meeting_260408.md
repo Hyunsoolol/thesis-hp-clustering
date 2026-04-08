@@ -349,6 +349,8 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat S_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{|
 | Oracle-feature baseline    | 3.000     | 0.682     | 1.000     | 0.000     | 3.000     |
 | True-parameter oracle      | 3.000     | 0.705     | 1.000     | 0.000     | 3.000     |
 
+<img width="1370" height="670" alt="image" src="https://github.com/user-attachments/assets/39770fda-2374-49c3-8ac2-e480c61ab300" />
+
 **[시나리오 2] 중간 신호 환경 ($a=1.4$)**
 
 | **방법론**                    | **사용 차원** | **ARI**   | **TPR**   | **FPR**   | $\hat{S}$ |
