@@ -4,7 +4,7 @@
 
 ## 핵심 요약
 
-본 보고서는 고차원 환경에서 평균 구조의 관점에서 “어떤 변수가 군집 간 차이를 실제로 유발하는가”를 식별하기 위한 비지도 혼합모형을 정리한 것이다. 직접적인 목표는 모든 형태의 군집 형성 변수를 찾는 것이 아니라, 공통 공분산 구조 하에서 군집 간 평균 차이를 유발하는 변수(mean-heterogeneity-driving variables)를 식별하는 데 있다.
+본 보고서는 고차원 환경에서 평균 구조의 관점에서 "어떤 변수가 군집 간 차이를 실제로 유발하는가"를 식별하기 위한 비지도 혼합모형을 정리한 것이다. 직접적인 목표는 모든 형태의 군집 형성 변수를 찾는 것이 아니라, 공통 공분산 구조 하에서 군집 간 평균 차이를 유발하는 변수(mean-heterogeneity-driving variables)를 식별하는 데 있다.
 
 현재 버전에서의 핵심 개선은 다음과 같다.
 
@@ -33,7 +33,7 @@
 
 그러나 비지도학습, 특히 고차원 클러스터링에서는 이와 같은 이질성의 원천 추적이 상대적으로 덜 정식화되어 있다. 기존 sparse clustering이나 model-based clustering은 주로 군집 복원 자체나 변수선택에 초점을 맞추는 경우가 많고, 군집 평균을 공통 부분과 군집특이 부분으로 분해하여 어떤 좌표가 mean heterogeneity를 실제로 유발하는지 직접 추적하는 effects-style parameterization은 상대적으로 부족하다.
 
-본 연구는 이러한 문제의식을 비지도학습으로 확장한다. 즉, 반응변수 $Y_i$ 가 없는 상황에서 군집 평균을 latent mean structure로 보고, 이를 공통 평균 파라미터와 군집특이 편차로 분해하여 “어떤 변수들이 군집 간 평균 차이를 만들어내는가”를 직접 추적하는 클러스터링 방법론을 개발하고자 한다. 다만 현재 1차 범위는 “모든 형태의 군집 형성 변수”가 아니라, 공통 공분산 구조 하에서 mean shift를 통해 군집 분리를 유발하는 변수를 식별하는 데 한정된다. 분산 차이나 상관구조 차이만으로 군집이 갈리는 경우는 현재 baseline model의 범위 밖에 있다.
+본 연구는 이러한 문제의식을 비지도학습으로 확장한다. 즉, 반응변수 $Y_i$ 가 없는 상황에서 군집 평균을 latent mean structure로 보고, 이를 공통 평균 파라미터와 군집특이 편차로 분해하여 "어떤 변수들이 군집 간 평균 차이를 만들어내는가"를 직접 추적하는 클러스터링 방법론을 개발하고자 한다. 다만 현재 1차 범위는 "모든 형태의 군집 형성 변수"가 아니라, 공통 공분산 구조 하에서 mean shift를 통해 군집 분리를 유발하는 변수를 식별하는 데 한정된다. 분산 차이나 상관구조 차이만으로 군집이 갈리는 경우는 현재 baseline model의 범위 밖에 있다.
 
 ---
 
@@ -92,9 +92,9 @@ $$\sum_{j=1}^K \delta_{jk}=0$$
 
 $$E(X_i)=\sum_{j=1}^K \pi_j\mu_j=\mu_0+\sum_{j=1}^K \pi_j\delta_j$$
 
-이므로, $\mu_0$ 는 $\pi_j$ 가 모두 같거나 $\sum_j \pi_j\delta_j=0$ 인 특수한 경우에만 marginal mean과 일치한다. 따라서 본 연구에서 $\mu_0$ 는 “전체 평균”이라기보다 effects-style parameterization에서의 기준점 역할을 하는 grand mean parameter로 해석하는 것이 정확하다.
+이므로, $\mu_0$ 는 $\pi_j$ 가 모두 같거나 $\sum_j \pi_j\delta_j=0$ 인 특수한 경우에만 marginal mean과 일치한다. 따라서 본 연구에서 $\mu_0$ 는 "전체 평균"이라기보다 effects-style parameterization에서의 기준점 역할을 하는 grand mean parameter로 해석하는 것이 정확하다.
 
-또한 본 연구는 원 논문의 parameterization에서 공통효과/군집특이효과 분해를 회귀계수에 적용했던 아이디어를, 비지도 setting에서는 군집 평균에 적용한 것으로 볼 수 있다. 즉, 원 논문과 문제의식은 연결되지만, 동일한 모형을 그대로 비지도화한 것은 아니며, “predictor effect heterogeneity”를 “component mean heterogeneity”로 재구성한 모형이다.
+또한 본 연구는 원 논문의 parameterization에서 공통효과/군집특이효과 분해를 회귀계수에 적용했던 아이디어를, 비지도 setting에서는 군집 평균에 적용한 것으로 볼 수 있다. 즉, 원 논문과 문제의식은 연결되지만, 동일한 모형을 그대로 비지도화한 것은 아니며, "predictor effect heterogeneity"를 "component mean heterogeneity"로 재구성한 모형이다.
 
 ### 4.2 이질적 변수의 정의
 
@@ -108,7 +108,7 @@ $$S_H=\{k:\|\delta_{\cdot k}\|_2\neq 0\}$$
 
 즉, $\delta_{1k}=\cdots=\delta_{Kk}=0$ 이면 변수 $k$ 는 모든 군집에서 평균이 동일하므로 군집 간 mean difference를 유발하지 않는다. 반대로 $\|\delta_{\cdot k}\|_2>0$ 이면 변수 $k$ 는 적어도 하나의 군집에서 평균 차이를 만들어내므로 mean-heterogeneity-driving variable이다.
 
-여기서 범위를 분명히 해야 한다. 위 정의는 “현재 baseline model 하에서의 평균 기반 이질성”을 의미한다. 따라서 본 모형이 직접 식별하는 것은 variance heterogeneity나 covariance heterogeneity를 포함한 일반적 의미의 cluster-forming variable 전체가 아니라, 공통 공분산 구조 아래에서 mean shift를 통해 군집 분리를 유발하는 변수이다.
+여기서 범위를 분명히 해야 한다. 위 정의는 "현재 baseline model 하에서의 평균 기반 이질성"을 의미한다. 따라서 본 모형이 직접 식별하는 것은 variance heterogeneity나 covariance heterogeneity를 포함한 일반적 의미의 cluster-forming variable 전체가 아니라, 공통 공분산 구조 아래에서 mean shift를 통해 군집 분리를 유발하는 변수이다.
 
 ### 4.3 공분산 구조: 왜 diagonal covariance부터 시작하는가
 
@@ -116,7 +116,7 @@ $$S_H=\{k:\|\delta_{\cdot k}\|_2\neq 0\}$$
 
 $$\Sigma_j = \Sigma = \mathrm{diag}(\sigma_1^2, \dots, \sigma_p^2)$$
 
-또는 가장 단순하게 $\Sigma=I_p$ 로 둔다. 이 가정 아래에서는 군집이 주어졌을 때 각 좌표가 조건부 독립이므로, mean heterogeneity selection 문제를 가장 선명하게 분리하여 볼 수 있다. 이는 “실제 데이터가 반드시 독립이다”라는 뜻이 아니라, 1차 단계에서 mean heterogeneity 자체를 먼저 정교하게 정식화하기 위한 working model이다.
+또는 가장 단순하게 $\Sigma=I_p$ 로 둔다. 이 가정 아래에서는 군집이 주어졌을 때 각 좌표가 조건부 독립이므로, mean heterogeneity selection 문제를 가장 선명하게 분리하여 볼 수 있다. 이는 "실제 데이터가 반드시 독립이다"라는 뜻이 아니라, 1차 단계에서 mean heterogeneity 자체를 먼저 정교하게 정식화하기 위한 working model이다.
 
 ---
 
@@ -140,7 +140,7 @@ $$w_k=(\|\tilde{\delta}_{\cdot k}\|_2+\varepsilon)^{-\gamma}$$
 
 실제 구현에서는 이론에서의 $\lambda_n$ 과 완전히 동일한 스케일의 튜닝 파라미터를 쓰기보다, raw penalty parameter를 grid search와 heuristic BIC를 통해 선택한다. 따라서 이론 표기와 구현상 penalty scale은 구분해서 해석하는 것이 필요하다.
 
-또한 현재 모형에서는 variable-wise selection을 위해 element-wise $\ell_1$ 보다 $\|\delta_{\cdot k}\|_2$ 형태의 group penalty를 사용하는 것이 더 자연스럽다. 하나의 변수는 모든 군집에서 함께 살아남거나 함께 0이 되므로, “어떤 변수 전체가 mean heterogeneity를 유발하는가”라는 질문에 직접 대응할 수 있다.
+또한 현재 모형에서는 variable-wise selection을 위해 element-wise $\ell_1$ 보다 $\|\delta_{\cdot k}\|_2$ 형태의 group penalty를 사용하는 것이 더 자연스럽다. 하나의 변수는 모든 군집에서 함께 살아남거나 함께 0이 되므로, "어떤 변수 전체가 mean heterogeneity를 유발하는가"라는 질문에 직접 대응할 수 있다.
 
 ### 5.2 식별성 제약
 
@@ -178,7 +178,7 @@ $$\sum_{j=1}^K \delta_{jk}=0$$
     
 - Adaptive Group L2가 아니라 Adaptive Group Lasso 또는 Adaptive Group $\ell_{2,1}$ penalty가 더 정확한 명칭이다.
     
-- Sparse K-means의 “사용 차원”은 실제 clustering 단계에서 사용한 변수 수가 아니라, 가중치 threshold를 기준으로 후처리한 유효 선택 변수 수로 해석하는 것이 맞다.
+- Sparse K-means의 "사용 차원"은 실제 clustering 단계에서 사용한 변수 수가 아니라, 가중치 threshold를 기준으로 후처리한 유효 선택 변수 수로 해석하는 것이 맞다.
     
 - HP+Refit은 진단 목적의 보조 실험으로 계산할 수 있으나, 본 보고서의 주표에서는 single-stage HP 성능을 중심으로 제시한다.
     
@@ -187,7 +187,7 @@ $$\sum_{j=1}^K \delta_{jk}=0$$
 
 ## 6. 이론적 연구목표
 
-기존 연구는 fixed $p, m$ 설정에서 adaptive estimator의 $\sqrt{n}$-consistency와 selection consistency를 제시하였다. 본 연구의 박사논문 기여는 이 결과를 비지도 high-dimensional setting으로 확장하는 데 있다. 다만 현재 단계에서 직접적으로 “misclustering rate가 항상 0으로 간다”는 식의 강한 주장을 두는 것은 과도하므로, 이론 목표를 다음과 같이 정교하게 설정하는 것이 바람직하다.
+기존 연구는 fixed $p, m$ 설정에서 adaptive estimator의 $\sqrt{n}$-consistency와 selection consistency를 제시하였다. 본 연구의 박사논문 기여는 이 결과를 비지도 high-dimensional setting으로 확장하는 데 있다. 다만 현재 단계에서 직접적으로 "misclustering rate가 항상 0으로 간다"는 식의 강한 주장을 두는 것은 과도하므로, 이론 목표를 다음과 같이 정교하게 설정하는 것이 바람직하다.
 
 **첫째, 식별성.** 식별성은 두 층위로 구분하여 논의한다.
 
@@ -237,17 +237,17 @@ $$s \log p = o(n)$$
 
 ## 7. 기존 연구와의 차별성
 
-본 연구의 차별점은 단순히 “클러스터링에 유용한 변수”를 고르는 것이 아니라, 군집 평균의 좌표별 분해를 통해 “왜 군집이 갈리는가”를 직접 묻는다는 점에 있다.
+본 연구의 차별점은 단순히 "클러스터링에 유용한 변수"를 고르는 것이 아니라, 군집 평균의 좌표별 분해를 통해 "왜 군집이 갈리는가"를 직접 묻는다는 점에 있다.
 
 다만 원 논문과 현재 모형의 관계는 정확히 구분할 필요가 있다. 원 논문에서는 mixture regression setting에서 relevant predictor 집합 $S_R$ 와 source of heterogeneity 집합 $S_H$ 를 동시에 구분한다. 반면 현재 비지도 baseline model은 outcome이 없는 평균 혼합모형이므로, 원 논문에서의 $S_R$–$S_H$ 구조를 그대로 재현하는 것은 아니다. 현재 1차 모형이 직접 식별하는 것은 사실상 mean-heterogeneity-driving coordinate에 해당하는 $S_H$-유사 객체이다.
 
-즉, 본 연구는 원 논문의 개념을 그대로 비지도화한 것이 아니라, 그 핵심 문제의식인 “heterogeneity의 원천 추적”을 mean-shift clustering 문제로 재구성한 방법론이라고 정리하는 것이 가장 정확하다.
+즉, 본 연구는 원 논문의 개념을 그대로 비지도화한 것이 아니라, 그 핵심 문제의식인 "heterogeneity의 원천 추적"을 mean-shift clustering 문제로 재구성한 방법론이라고 정리하는 것이 가장 정확하다.
 
 ---
 
 ## Part II. 시뮬레이션 결과
 
-본 절의 시뮬레이션은 제안 모형이 “모든 형태의 군집 형성 변수”를 찾는지 검증하는 것이 아니라, 공통 공분산 구조 하에서 군집 간 평균 차이를 유발하는 변수(mean-heterogeneity-driving variables)를 얼마나 정확히 식별하는지, 그리고 그러한 선택이 실제 군집 성능 개선으로 이어지는지를 경험적으로 확인하는 데 목적이 있다.
+본 절의 시뮬레이션은 제안 모형이 "모든 형태의 군집 형성 변수"를 찾는지 검증하는 것이 아니라, 공통 공분산 구조 하에서 군집 간 평균 차이를 유발하는 변수(mean-heterogeneity-driving variables)를 얼마나 정확히 식별하는지, 그리고 그러한 선택이 실제 군집 성능 개선으로 이어지는지를 경험적으로 확인하는 데 목적이 있다.
 
 ### 1. 시뮬레이션 개요
 
@@ -321,8 +321,8 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat{S}_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{
 
 주의할 점은, Oracle-feature baseline은 변수 집합만 알고 있을 뿐 실제로는 다시 적합을 수행하므로 local optimum과 초기값 영향으로 인해 true upper bound가 아니다. true upper bound에 더 가까운 기준은 true-parameter oracle이다.
 
-또한 Sparse K-means의 “사용 차원”은 clustering 단계에서 실제 사용된 변수 수가 아니라, 가중치 threshold를 기준으로 후처리한 유효 선택 변수 수이다.
-(※ 표 컬럼 해석 주의사항) 사용 차원(알고리즘 입력 차원)은 EM 업데이트에 투입된 변수 수를 의미한다. Proposed HP는 모든 변수를 매 iteration에 포함하므로 전체 차원 $p$와 같다. 반면 실질적인 선택 결과는 $\hat{S}$ (선택 변수 수) 컬럼을 기준으로 해석해야 한다. $\hat{S} = \|\delta_{\cdot k}\|_2 > \text{threshold}$ 를 만족하는 변수의 수이며, TPR과 FPR 역시 $\hat{S}$를 기준으로 계산된다.
+또한 Sparse K-means의 "사용 차원"은 clustering 단계에서 실제 사용된 변수 수가 아니라, 가중치 threshold를 기준으로 후처리한 유효 선택 변수 수이다.
+(※ 표 컬럼 해석 주의사항) 사용 차원(알고리즘 입력 차원)은 EM 업데이트에 투입된 변수 수를 의미한다. Proposed HP는 모든 변수를 매 iteration에 포함하므로 전체 차원 $p$와 같다. 반면 실질적인 선택 결과는 $\hat{S}$ (선택 변수 수) 컬럼을 기준으로 해석해야 한다. $\hat{S} = |\{ k : \|\hat{\delta}_{\cdot k}\|_2 > \text{threshold} \}|$ 이며, TPR과 FPR 역시 $\hat{S}$를 기준으로 계산된다.
 
 ---
 
@@ -387,7 +387,7 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat{S}_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{
     
 - **둘째,** Naive Lasso는 변수 선택 자체는 양호하게 보일 수 있으나, 초기 ARI가 낮고 refit 이후에야 성능이 회복되는 경향을 보인다. 이는 element-wise shrinkage가 수축 편향에 더 민감하다는 점을 보여준다.
     
-- **셋째,** 다만 기본 환경에서도 true-parameter oracle은 HP보다 여전히 높다. 따라서 현재 결과는 오라클 결과와 유사한 경향으로 볼 수 있다.
+- **셋째,** 다만 기본 환경에서도 true-parameter oracle은 HP보다 여전히 높다. 따라서 현재 결과는 true-parameter oracle에 비해 여전히 gap이 존재하며, near-oracle empirical behavior로 해석하는 것이 적절하다.
     
 
 ---
@@ -511,7 +511,7 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat{S}_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{
 
 #### 7.3 해석
 
-초고차원 환경에서는 HP가 선택 성능 측면에서 여전히 매우 낮은 FPR을 유지하며 안정적인 패턴을 보인다. 특히 $a=1.2$ 구간에서 HP의 ARI는 0.652, feature-oracle baseline은 0.625, true-parameter oracle은 0.680이다. HP가 feature-oracle baseline보다 높은 값을 보인 것은, 고차원 유한표본 환경에서 regularization이 추정 분산을 낮추는 finite-sample stabilization effect 때문일 수 있다. true-parameter oracle은 여전히 0.680으로, HP가 feature-oracle baseline을 소폭 상회한 것은, oracle-feature baseline이 local optimum 영향으로 불안정하다는 점을 고려하면 HP의 우수성보다는 강한 정규화 구조가 추정 분산을 낮추는 finite-sample 안정화 효과로 해석하는 것이 더 적절하다. 성능의 주된 기준은 true-parameter oracle 대비 gap으로, 현재 HP는 이 gap을 좁히는 방향으로 작동하고 있다.
+초고차원 환경에서는 HP가 선택 성능 측면에서 여전히 매우 낮은 FPR을 유지하며 안정적인 패턴을 보인다. 특히 $a=1.2$ 구간에서 HP의 ARI는 0.652, feature-oracle baseline은 0.625, true-parameter oracle은 0.680이다. HP가 feature-oracle baseline을 소폭 상회한 것은 HP 자체의 절대적 우위라기보다, 강한 정규화 구조가 추정 분산을 낮추는 finite-sample 안정화 효과로 해석하는 것이 적절하다. 성능의 주된 기준은 true-parameter oracle 대비 gap이며, 현재 HP는 이 gap을 좁히는 방향으로 작동하고 있다.
 
 ---
 
@@ -563,7 +563,7 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat{S}_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{
 
 ### A.1 실험 목적
 
-본 부록에서는 본문과 달리 모든 변수의 분산이 1인 항등행렬 공분산 환경에서 시뮬레이션을 수행하였다. 목적은 “분산이 동일할 때도 본문과 같은 경향이 유지되는가”를 확인하는 것이다. 현재 결과는 흥미로운 보조 관찰로 해석하며, 이를 곧바로 일반적인 “분산-적응성의 실증적 입증”으로 확대 해석하지는 않는다.
+본 부록에서는 본문과 달리 모든 변수의 분산이 1인 항등행렬 공분산 환경에서 시뮬레이션을 수행하였다. 목적은 "분산이 동일할 때도 본문과 같은 경향이 유지되는가"를 확인하는 것이다. 현재 결과는 분산 구조가 선택 성능에 미치는 영향을 탐색하기 위한 보조 실험으로 해석하며, 이를 곧바로 일반적인 "분산-적응성의 실증적 입증"으로 확대 해석하지는 않는다.
 
 ### A.2 저차원 환경 ($p=20, q=3$) 결과표
 
