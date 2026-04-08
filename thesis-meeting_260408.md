@@ -449,7 +449,8 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat{S}_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{
 
 #### 6.3 해석
 
-차원이 $p=100$ 으로 늘어나자 unpenalized GMM의 ARI가 0으로 수렴하는 현상이 관찰되었다. 이는 $p \ge n$ 근방에서 공분산 행렬 추정이 singular해지고 EM이 degenerate solution으로 수렴하는 구현 수준의 원인, 또는 고차원에서 노이즈 변수로 인해 군집 신호가 희석되는 통계적 원인 중 하나 또는 복합으로 발생할 수 있다. 현재 실험에서는 이 둘을 구분하지 않으므로, GMM 결과는 "해당 구현 조건 하의 관찰 결과"로 해석한다. (초고차원 $p=300$ 환경에서는 ARI가 0이 아닌 점(0.221~0.385)과의 일관성도 추후 확인이 필요하다.)한편, Sparse K-means는 많은 노이즈 변수를 남긴 채 refit을 수행하면서 크게 불안정해졌다. 약신호 $a=1.2$ 구간에서 HP의 ARI는 0.700, feature-oracle baseline은 0.698, true-parameter oracle은 0.712이다. HP가 feature-oracle baseline을 소폭 상회한 것은, oracle-feature baseline이 local optimum 영향으로 불안정하다는 점을 고려하면 HP의 우수성보다는 강한 정규화 구조가 추정 분산을 낮추는 finite-sample 안정화 효과로 해석하는 것이 더 적절하다. 성능의 주된 기준은 true-parameter oracle 대비 gap으로, 현재 HP는 이 gap을 좁히는 방향으로 작동하고 있다.
+차원이 $p=100$ 으로 늘어나자 unpenalized GMM의 ARI가 0으로 수렴하는 현상이 관찰되었다. 이는 $p \ge n$ 근방에서 공분산 행렬 추정이 singular해지고 EM이 degenerate solution으로 수렴하는 구현 수준의 원인, 또는 고차원에서 노이즈 변수로 인해 군집 신호가 희석되는 통계적 원인 중 하나 또는 복합으로 발생할 수 있다. 현재 실험에서는 이 둘을 구분하지 않으므로, GMM 결과는 "해당 구현 조건 하의 관찰 결과"로 해석한다. (초고차원 $p=300$ 환경에서는 ARI가 0이 아닌 점(0.221~0.385)과의 일관성도 추후 확인이 필요하다.)
+한편, Sparse K-means는 많은 노이즈 변수를 남긴 채 refit을 수행하면서 크게 불안정해졌다. 약신호 $a=1.2$ 구간에서 HP의 ARI는 0.700, feature-oracle baseline은 0.698, true-parameter oracle은 0.712이다. HP가 feature-oracle baseline을 소폭 상회한 것은, oracle-feature baseline이 local optimum 영향으로 불안정하다는 점을 고려하면 HP의 우수성보다는 강한 정규화 구조가 추정 분산을 낮추는 finite-sample 안정화 효과로 해석하는 것이 더 적절하다. 성능의 주된 기준은 true-parameter oracle 대비 gap으로, 현재 HP는 이 gap을 좁히는 방향으로 작동하고 있다.
 
 ---
 
