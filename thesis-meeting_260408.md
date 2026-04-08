@@ -117,7 +117,7 @@ $$S_H=\{k:\|\delta_{\cdot k}\|_2\neq 0\}$$
 
 본 연구의 초기 모델 설정 및 1차 시뮬레이션에서는 다음과 같이 두는 것이 타당하다.
 
-$$\Sigma_j=\Sigma=\operatorname{diag}(\sigma_1^2,\dots,\sigma_p^2)$$
+$$\Sigma_j = \Sigma = \mathrm{diag}(\sigma_1^2, \dots, \sigma_p^2)$$
 
 또는 가장 단순하게 $\Sigma=I_p$로 둔다. 이 가정 아래에서는 군집이 주어졌을 때 각 좌표가 조건부 독립이므로, mean heterogeneity selection 문제를 가장 선명하게 분리하여 볼 수 있다. 이는 “실제 데이터가 반드시 독립이다”라는 뜻이 아니라, 1차 단계에서 mean heterogeneity 자체를 먼저 정교하게 정식화하기 위한 working model이다.
 
