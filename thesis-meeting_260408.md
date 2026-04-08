@@ -378,6 +378,8 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat{S}_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{
 |Oracle-feature baseline|3.000|0.463|1.000|0.000|3.000|
 |True-parameter oracle|3.000|0.498|1.000|0.000|3.000|
 
+<img width="1176" height="602" alt="image" src="https://github.com/user-attachments/assets/e2c6f857-155e-4806-852c-7ba17cbf60fd" />
+
 #### 5.3 해석
 
 - **첫째,** 기본 환경에서는 single-stage HP가 feature-oracle baseline에 근접하는 양상을 보인다. 예를 들어 $a=1.4$ 구간에서 HP의 ARI는 0.591이고 feature-oracle baseline은 0.596이다. 이는 HP가 별도 refit 없이도 상당히 안정적인 군집 복원 성능을 낼 수 있음을 시사한다.
@@ -442,6 +444,8 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat{S}_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{
 |Oracle-feature baseline|5.000|0.698|1.000|0.000|5.000|
 |True-parameter oracle|5.000|0.712|1.000|0.000|5.000|
 
+<img width="1176" height="602" alt="image" src="https://github.com/user-attachments/assets/67ad946e-fc6c-4206-8524-207f9aa951a2" />
+
 #### 6.3 해석
 
 차원이 $p=100$ 으로 늘어나자 unpenalized GMM은 현재 working implementation에서 사실상 0에 가까운 ARI를 보였고, Sparse K-means는 많은 노이즈 변수를 남긴 채 refit을 수행하면서 크게 불안정해졌다.
@@ -502,6 +506,8 @@ $$\mathrm{TPR} = \frac{|S_H\cap \hat{S}_H|}{|S_H|} ,\qquad \mathrm{FPR} = \frac{
 |**Proposed HP (No Refit)**|300.000|0.652|1.000|0.004|6.300|
 |Oracle-feature baseline|5.000|0.625|1.000|0.000|5.000|
 |True-parameter oracle|5.000|0.680|1.000|0.000|5.000|
+
+<img width="1176" height="602" alt="image" src="https://github.com/user-attachments/assets/ba74245a-4b01-4630-be73-1a6018097dd6" />
 
 #### 7.3 해석
 
