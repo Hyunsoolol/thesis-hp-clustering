@@ -218,7 +218,7 @@ $$R(\hat g)-R(g^*)\to 0$$
 
 다른 하나는 separation-dependent misclustering bound이다. 이를 위해
 
-$$\Delta_{\min,n}^2 = \min_{j\neq \ell} \sum_{k\in S_H} \frac{(\delta_{jk}^*-\delta_{\ell k}^*)^2}{\sigma_k^2}$$
+$$\Delta_{\min,n}^2 = \min_{j \neq \ell} \sum_{k \in S_H} \frac{(\delta_{jk}^{\ast} - \delta_{\ell k}^{\ast})^2}{\sigma_k^2}$$
 
 를 정의하고, $\Delta_{\min,n}^2\to\infty$와 같은 stronger separation regime 하에서
 
@@ -230,9 +230,10 @@ $$\frac{1}{n}\sum_{i=1}^n I(\hat Z_i\neq Z_i^*)\to 0$$
 
 기본 가정의 예로는 다음을 둘 수 있다.
 
-$$\pi_j^*\ge \pi_{\min}>0,\qquad 0<c_\sigma \le \sigma_k^2 \le C_\sigma < \infty$$
+$$\pi_j^{\ast} \ge \pi_{\min} > 0, \qquad 0 < c_\sigma \le \sigma_k^2 \le C_\sigma < \infty$$
 
-$$s\log p=o(n)$$
+$$s \log p = o(n)$$
+
 ---
 ## 7. 기존 연구와의 차별성
 
