@@ -21,6 +21,7 @@
 
 ---
 
+# Part I. 연구 방법론
 ## 1. 연구배경 및 문제의식
 
 혼합모형 기반 회귀에서는 단순히 중요한 설명변수를 찾는 것만으로 충분하지 않고, 그중에서도 실제로 군집 간 차이를 만들어내는 변수, 즉 source of heterogeneity를 구분하는 것이 더 해석가능하고 더 간명한 모형을 만든다. Li et al.의 혼합회귀 연구는 predictor effect를 공통효과와 군집특이효과로 분해하고, relevant predictor와 heterogeneity-driving predictor를 동시에 식별하는 regularized finite mixture effects regression을 제안하였다. 특히 이 연구는 component variance가 다를 때 raw effect와 scaled effect를 구분해야 함을 강조하고, adaptive penalty, generalized lasso, generalized EM, BIC tuning, fixed $p, m$ 이론, 그리고 correlated predictors·unequal mixing·all-heterogeneous setting까지 폭넓게 다루었다.
@@ -120,11 +121,23 @@ $$\mathcal{L}_n^{HP-AL}(\Theta) = \frac{1}{n}\sum_{i=1}^n \log\left[ \sum_{j=1}^
 
 ### 5.2 식별성 제약 및 계산 알고리즘
 
-$\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{j=1}^K \delta_{jk}=0$ 이라는 sum-to-zero 제약이 필수적이다.
+$\mu_j = \mu_0 + \delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{j=1}^K \delta_{jk}=0$ 이라는 sum-to-zero 제약이 필수적이다.
 
-실제 계산(EM 알고리즘) 구현에서는 $\mathbf{1}_K$ 의 직교여공간 basis $Q \in \mathbb{R}^{K \times (K-1)}$ 를 사용하여 $\delta_{\cdot k} = Q\alpha_k$ 로 재파라미터화하면 제약이 사라진다. $Q$ 가 column-orthonormal이면 $\|\delta_{\cdot k}\|_2 = \|Q\alpha_k\|_2 = \|\alpha_k\|_2$ 가 성립하므로, group penalty의 형태가 재파라미터화 전후로 보존된다.
+실제 계산(EM 알고리즘) 구현에서는 $\mathbf{1}_K$ 의 직교여공간 basis $Q \in \mathbb{R}^{K \times (K-1)}$ 를 사용하여
 
-**Adaptive weight의 일관성:** adaptive weight $w_k = (\|\tilde{\delta}_{\cdot k}\|_2 + \varepsilon)^{-\gamma}$ 를 구성하는 pilot estimator $\tilde{\delta}_{\cdot k}$ 역시 동일한 $Q$ 재파라미터화를 통해 얻어야 한다. 즉, pilot 단계에서 $\tilde{\alpha}_k$ 를 먼저 추정한 후 $\tilde{\delta}_{\cdot k} = Q\tilde{\alpha}_k$ 로 복원하여 $w_k$ 를 계산한다. 이는 수치적 안정성과 희소성 보존 측면에서 유리하다.
+$$\delta_{\cdot k} = Q\alpha_k$$
+
+로 재파라미터화하면 제약이 사라진다. $Q$ 가 column-orthonormal이면
+
+$$\|\delta_{\cdot k}\|_2 = \|Q\alpha_k\|_2 = \|\alpha_k\|_2$$
+
+가 성립하므로, group penalty의 형태가 재파라미터화 전후로 보존된다.
+
+**Adaptive weight의 일관성:** adaptive weight
+
+$$w_k = (\|\tilde{\delta}_{\cdot k}\|_2 + \varepsilon)^{-\gamma}$$
+
+를 구성하는 pilot estimator $\tilde{\delta}_{\cdot k}$ 역시 동일한 $Q$ 재파라미터화를 통해 얻어야 한다. 즉, pilot 단계에서 $\tilde{\alpha}_k$ 를 먼저 추정한 후 $\tilde{\delta}_{\cdot k} = Q\tilde{\alpha}_k$ 로 복원하여 $w_k$ 를 계산한다. 이는 수치적 안정성과 희소성 보존 측면에서 유리하다.
 
 ### 5.3 구현상 튜닝과 해석 주의점
 
@@ -140,15 +153,19 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
     
 - HP+Refit은 진단 목적의 보조 실험으로 계산할 수 있으나, 본 보고서의 주표에서는 single-stage HP 성능을 중심으로 제시한다.
     
-* 선택 변수 집합은 $\hat{S}_\tau = \{k : \|\hat{\delta}_{\cdot k}\|_2 > \tau\}, \quad \tau = 10^{-4}$ 으로 정의한다. 여기서 $\tau$는 수치적 파편화를 제거하기 위한 고정 tolerance이며, $\lambda$의 함수가 아닌 상수로 설정하였다. TPR과 FPR은 모두 $\hat{S}_\tau$를 기준으로 계산된다.
+- **선택 변수 집합은 다음 수식과 같이 고정된 임계값 $\tau$ 로 정의한다.**
+    
+    $$\hat{S}_\tau = \{k : \|\hat{\delta}_{\cdot k}\|_2 > \tau\}, \quad \tau = 10^{-4}$$
+    
+    **여기서 $\tau$는 수치적 파편화를 제거하기 위한 고정 tolerance이며, $\lambda$의 함수가 아닌 상수로 설정하였다. TPR과 FPR은 모두 $\hat{S}_\tau$를 기준으로 계산된다.**
 
 ---
 
-## Part II. 시뮬레이션 결과
+# Part II. 시뮬레이션 결과
 
 이번 미팅에서는 M3(Non-adaptive Group Lasso)를 독립적인 비교 방법론으로 추가하여, Adaptive weight의 유무가 군집 성능(ARI)과 변수 선택 수($\hat{S}$)에 미치는 영향을 직접적으로 대조하였다. 또한, 각 모델의 **Single-stage(No Refit)** 성능을 주 지표로 삼아 모델 자체의 수축 편향 억제 능력을 평가하였다.
 
-### 0. 비교 방법론 및 벤치마크
+## 1. 비교 방법론 및 벤치마크
 
 **1) 전통적 비지도 학습**
 
@@ -190,13 +207,13 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
 
 ---
 
-### 1. 기본 환경 ($p=20, q=3$)
+## 2. 기본 환경 ($p=20, q=3$)
 
-#### 1.1 실험 세팅
+### 2.1 실험 세팅
 
 표본 수는 $n=300$, 총 차원 $p=20$, 정답 변수는 $q=3$ 개이다. 신호 강도는 $a \in \{1.6, 1.4, 1.2, 1.0, 0.8, 0.6\}$으로 설정하였으며, $a \in \{1.6, 1.4, 1.2\}$를 주 분석 구간으로, $a \in \{1.0, 0.8, 0.6\}$을 한계 신호 보조 분석 구간으로 구분한다.
 
-#### 1.2 시나리오별 결과표 (평균 및 표준오차)
+### 2.2 시나리오별 결과표 (평균 및 표준오차)
 
 **[시나리오 1] 신호 환경 (a=1.6)**
 
@@ -292,7 +309,7 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
 
 <img width="1251" height="640" alt="image" src="https://github.com/user-attachments/assets/02c193f1-6d67-4795-8f29-59748ce31d37" />
 
-#### 1.3 해석
+### 2.3 해석
 
 - **첫째, Adaptive weight의 기여:** 중간 신호($a=1.4$) 환경에서 Non-adaptive(HP-L)의 ARI는 0.476(0.028)에 머물렀으나, 적응형 가중치를 적용한 HP-AL은 **0.591(0.017)**로 성능이 크게 상승하며 변동성(SE) 또한 줄어들었다. 이는 Adaptive weight가 추정 안정성과 ARI를 개선하는 핵심 기제임을 시사한다. 단, 현재 threshold($\tau=10^{-4}$) 기준에서 HP-L과 HP-AL의 TPR/FPR/$\hat{S}_\tau$는 유사하게 나타났으며, support metric에서의 추가 개선 여부는 threshold sensitivity 분석 이후 확인이 필요하다.
     
@@ -305,13 +322,13 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
 
 ---
 
-### 2. 고차원 환경 ($p=100, q=5$)
+## 3. 고차원 환경 ($p=100, q=5$)
 
-#### 2.1 실험 세팅
+### 3.1 실험 세팅
 
 표본 수 $n=300$, 차원 $p=100$, 정답 변수 $q=5$, 신호 강도 $a \in \{1.6, 1.4, 1.2\}$ 이다. 표의 수치는 반복 실험의 평균 (표준오차)를 나타낸다.
 
-#### 2.2 시나리오별 결과표 (평균 및 표준오차)
+### 3.2 시나리오별 결과표 (평균 및 표준오차)
 
 **[시나리오 1] 신호 환경 (a=1.6)**
 
@@ -359,7 +376,7 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
 | True-parameter oracle              | 5.000 (0.000)   | 0.712 (0.021)     | 1.000 (0.000) | 0.000 (0.000) | 5.000 (0.000)  |
 <img width="1251" height="640" alt="image" src="https://github.com/user-attachments/assets/adca8d16-4050-45cc-a9f1-1202874ba602" />
 
-#### 2.3 해석
+### 3.3 해석
 
 - **첫째, 차원의 저주와 GMM의 붕괴:** 차원이 $p=100$ 으로 늘어나자 unpenalized GMM의 ARI가 0으로 수렴하는 현상이 관찰되었다. 이는 $p \ge n$ 근방에서 공분산 행렬 추정이 singular해지고 EM이 degenerate solution으로 수렴하는 구현 수준의 원인, 또는 고차원에서 노이즈 변수로 인해 군집 신호가 희석되는 통계적 원인 중 하나 또는 복합으로 발생할 수 있다. 현재 실험에서는 이 둘을 구분하지 않으므로, GMM 결과는 "해당 구현 조건 하의 관찰 결과"로 해석한다. (초고차원 $p=300$ 환경에서는 ARI가 0이 아닌 점과의 일관성도 추후 확인이 필요하다.)
     
@@ -372,13 +389,13 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
 
 ---
 
-### 3. 초고차원 환경 ($p=300, q=5$)
+## 4. 초고차원 환경 ($p=300, q=5$)
 
-#### 3.1 실험 세팅
+### 4.1 실험 세팅
 
 표본 수 $n=300$, 차원 $p=300$, 정답 변수 $q=5$ 인 ultra-high-dimensional setting이다. 표의 수치는 반복 실험의 평균 (표준오차)를 나타낸다.
 
-#### 3.2 시나리오별 결과표 (평균 및 표준오차)
+### 4.2 시나리오별 결과표 (평균 및 표준오차)
 
 
 
@@ -428,7 +445,7 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
 
 <img width="1251" height="640" alt="image" src="https://github.com/user-attachments/assets/b10db616-c97f-4915-8827-f830751b8ec6" />
 
-#### 3.3 해석
+### 4.3 해석
 
 - **첫째, 차원의 저주 속 Adaptive 구조의 우위:** 노이즈가 정답 변수보다 무려 59배 많은 초고차원 극한 환경($p=300$)에서 Adaptive weight의 효과가 가장 극적으로 드러났다. 약신호($a=1.2$) 구간을 보면, Non-adaptive(HP-L)의 ARI는 0.514에 그친 반면 제안 모형인 Adaptive(HP-AL)는 **0.652**로 비약적인 성능 향상을 보였다. 다수의 노이즈 변수를 효과적으로 억제하는 적응형 가중치가 없다면 고차원 클러스터링이 불가능함을 시사한다.
     
@@ -439,7 +456,7 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
 
 ---
 
-## 4. 결론 및 향후 계획
+## 5. 결론 및 향후 계획
 
 1. **Adaptive Group 구조의 유용성 확인:** 시뮬레이션을 통해 단순 Group Lasso(M3)보다 Adaptive Group Lasso(M4)가 고차원 비지도 학습에서 추정 안정성과 ARI를 개선하는 핵심 기제임을 시사한다. 단, 현재 threshold($\tau=10^{-4}$) 기준에서 HP-L과 HP-AL의 TPR/FPR/$\hat{S}_\tau$는 유사하게 나타났으며, support metric에서의 추가 개선 여부는 threshold sensitivity 분석 이후 확인이 필요하다.
     
