@@ -166,7 +166,7 @@ $$w_k = (\|\tilde{\delta}_{\cdot k}\|_2 + \varepsilon)^{-\gamma}$$
 - **선택 변수 집합은 다음 수식과 같이 고정된 임계값 $\tau$ 로 정의한다.**
     
 $$ \hat{S}_\tau = \{k : \|\hat{\delta}_{\cdot k}\|_2 > \tau\}, \quad \tau = 10^{-4} $$
-    
+
 **여기서 $\tau$는 수치적 파편화를 제거하기 위한 고정 tolerance이며, $\lambda$의 함수가 아닌 상수로 설정하였다. TPR과 FPR은 모두 $\hat{S}_\tau$를 기준으로 계산된다.**
 
 ---
@@ -214,7 +214,13 @@ $$ \hat{S}_\tau = \{k : \|\hat{\delta}_{\cdot k}\|_2 > \tau\}, \quad \tau = 10^{
 
 > **※ 표 컬럼 해석 주의사항**
 > 
-> 1) 표의 '사용 차원'은 각 알고리즘이 군집화에 실질적으로 투입한 유효 변수의 수를 의미하며, penalty 기반 모형의 경우 선택 변수 수 $\hat{S}_\tau$ 와 동일하다. (HP 계열은 알고리즘 입력 차원은 $p$이나, 실질적 선택 결과는 $\hat{S}_\tau$ 기준으로 해석한다).
+> 1) 표의 차원 관련 지표는 다음과 같이 정의한다.
+
+$$p_{\mathrm{fit}} = \text{실제 fitting에 들어간 차원}$$
+
+$$\hat{S}_\tau = \text{threshold 후 선택 변수 수}$$
+
+Penalty 기반 모형의 single-stage fitting은 전체 $p$ 차원에서 수행되므로 $p_{\mathrm{fit}}=p$ 이며, 실질적 변수 선택 결과는 별도 열인 $\hat{S}_\tau$ 를 기준으로 해석한다. TPR과 FPR 역시 $\hat{S}_\tau$를 기준으로 계산한다.
 > 
 > 2) 선택 변수 집합은
 > 
