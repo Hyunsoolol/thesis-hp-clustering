@@ -291,6 +291,7 @@ $\mu_j=\mu_0+\delta_j$ 만으로는 분해가 유일하지 않으므로, $\sum_{
 <img width="1251" height="640" alt="image" src="https://github.com/user-attachments/assets/19bd0fa8-d238-49dc-a71f-d72f3e2f96b9" />
 
 <img width="1251" height="640" alt="image" src="https://github.com/user-attachments/assets/02c193f1-6d67-4795-8f29-59748ce31d37" />
+
 #### 1.3 해석
 
 - **첫째, Adaptive weight의 기여:** 중간 신호($a=1.4$) 환경에서 Non-adaptive(HP-L)의 ARI는 0.476(0.028)에 머물렀으나, 적응형 가중치를 적용한 HP-AL은 **0.591(0.017)**로 성능이 크게 상승하며 변동성(SE) 또한 줄어들었다. 이는 Adaptive weight가 추정 안정성과 ARI를 개선하는 핵심 기제임을 시사한다. 단, 현재 threshold($\tau=10^{-4}$) 기준에서 HP-L과 HP-AL의 TPR/FPR/$\hat{S}_\tau$는 유사하게 나타났으며, support metric에서의 추가 개선 여부는 threshold sensitivity 분석 이후 확인이 필요하다.
