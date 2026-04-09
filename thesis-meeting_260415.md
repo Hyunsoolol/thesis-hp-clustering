@@ -165,7 +165,7 @@ $$w_k = (\|\tilde{\delta}_{\cdot k}\|_2 + \varepsilon)^{-\gamma}$$
     
 - **선택 변수 집합은 다음 수식과 같이 고정된 임계값 $\tau$ 로 정의한다.**
     
-    $$\hat{S}_\tau = {k : \|\hat{\delta}_{\cdot k}\|_2 > \tau}, \quad \tau = 10^{-4}$$
+$$ \hat{S}_\tau = \{k : \|\hat{\delta}_{\cdot k}\|_2 > \tau\}, \quad \tau = 10^{-4} $$
     
     **여기서 $\tau$는 수치적 파편화를 제거하기 위한 고정 tolerance이며, $\lambda$의 함수가 아닌 상수로 설정하였다. TPR과 FPR은 모두 $\hat{S}_\tau$를 기준으로 계산된다.**
 
