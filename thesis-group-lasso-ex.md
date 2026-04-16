@@ -110,13 +110,13 @@ $$\hat{\delta}_{\cdot k} = \max\left(0, 1 - \frac{\lambda}{\|\tilde{\delta}_{\cd
 
 - **일반 라쏘 (Element-wise Soft-Thresholding):**
     
-    $$\hat{\delta}_{jk} = \text{sign}(\tilde{\delta}_{jk}) \max(0, |\tilde{\delta}_{jk}| - \lambda)$$
+$$\hat{\delta}_{jk} = \text{sign}(\tilde{\delta}_{jk}) \max(0, |\tilde{\delta}_{jk}| - \lambda)$$
     
     개별 값에서 $\lambda$를 직접 **뺍니다**. 그래서 값마다 깎이는 타격이 다르고, 작은 값은 먼저 0이 되어 파편화가 발생합니다.
     
 - **그룹 라쏘 (Block Soft-Thresholding):**
     
-    $$\hat{\delta}_{\cdot k} = \max\left(0, 1 - \frac{\lambda}{\|\tilde{\delta}_{\cdot k}\|_2}\right) \tilde{\delta}_{\cdot k}$$
+$$\hat{\delta}_{\cdot k} = \max\left(0, 1 - \frac{\lambda}{\|\tilde{\delta}_{\cdot k}\|_2}\right) \tilde{\delta}_{\cdot k}$$
     
     벡터 방향은 그대로 둔 채, 길이만 비율로 **압축**합니다. 그래서 영원히 파편화가 발생하지 않습니다.
     
